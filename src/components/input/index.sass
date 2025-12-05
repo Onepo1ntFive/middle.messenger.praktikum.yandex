@@ -1,0 +1,81 @@
+@use '../../styles/vars' as *
+$mainClass: '.input'
+
+#{$mainClass}
+    position: relative
+
+    input
+        padding: 7px 0
+        border: 0
+        border-bottom: 2px solid $colorBlue
+        width: 100%
+        min-width: 100px
+        font-family: $familyMain
+
+        &:focus
+            outline: none
+
+        &:focus ~ label,
+        &:not(:placeholder-shown) ~ label
+            transform: translateY(calc(-100% - 10px))
+
+    label
+        position: absolute
+        left: 0
+        top: 50%
+        transform: translateY(-50%)
+        font-size: 13px
+        pointer-events: none
+        color: $colorGray
+
+    &--message
+        input
+            padding: 10px 20px
+            border-radius: 100px
+            border: 0
+            background: $colorGrayLight
+
+            &:focus ~ label,
+            &:not(:placeholder-shown) ~ label
+                color: transparent
+
+        label
+            left: 20px
+            transform: translateY(-50%)
+
+    &--clear
+        input,
+        input:disabled
+            padding: 0
+            margin: 0
+            border: 0
+            background: none
+
+    &--search
+        input
+            padding: 10px 10px 10px 30px
+            border-radius: 5px
+            border: 0
+            background: $colorGrayLight
+
+            &:focus ~ label,
+            &:not(:placeholder-shown) ~ label
+                left: 5px
+                transform: translateY(-50%)
+                color: transparent
+
+        label
+            padding-left: 20px
+            left: 50%
+            transform: translate(-50%, -50%)
+
+            &::before
+                content: ''
+                position: absolute
+                left: 0
+                top: 50%
+                transform: translateY(-50%)
+                width: 20px
+                height: 20px
+                background: url("/images/zoom.svg") 50% 50% no-repeat
+

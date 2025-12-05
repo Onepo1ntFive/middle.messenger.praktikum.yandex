@@ -1,0 +1,45 @@
+@use '../../styles/vars' as *
+$mainClass: '.link'
+
+#{$mainClass}
+    font-size: 13px
+    text-decoration: none
+    border-bottom: 1px solid transparent
+    color: $colorBlue
+
+    &:hover,
+    &:active
+        border-bottom-color: $colorBlue
+        color: $colorBlue
+
+    &--red
+        color: $colorRed
+
+        &:hover,
+        &:active
+            border-bottom-color: $colorRed
+            color: $colorRed
+
+    &--gray
+        color: $colorGray
+
+        &:hover,
+        &:active
+            border-bottom-color: $colorGray
+            color: $colorGray
+
+    &--chevron
+        position: relative
+        margin-right: 20px
+
+        &::after
+            content: ''
+            display: block
+            position: absolute
+            left: calc(100% + 5px)
+            top: 50%
+            transform: translateY(-50%)
+            width: 10px
+            height: 10px
+            background: url("/images/chevron-right.svg") 50% 50% no-repeat
+
