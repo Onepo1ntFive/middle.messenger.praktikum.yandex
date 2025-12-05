@@ -1,0 +1,16 @@
+<li class='page-chat_list-item{{#if active}} active{{/if}}'>
+    <div class='page-chat_list-avatar'></div>
+    <div class='page-chat_list-content'>
+        <div class='page-chat_list-header'>
+            <div class='page-chat_list-name'>{{title}}</div>
+            <div class='page-chat_list-time' title='{{date}} {{time}}'>{{time}}</div>
+        </div>
+        <div class='page-chat_list-message'>
+            {{#if lastMe}}<strong>Вы:</strong>{{/if}}
+            {{message}}
+        </div>
+        {{#if unread}}
+            <div class='page-chat_list-unread'>{{unread}}</div>
+        {{/if}}
+    </div>
+</li>

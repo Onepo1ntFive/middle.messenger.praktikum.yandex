@@ -1,0 +1,35 @@
+@use '../../styles/vars' as *
+$mainClass: '.button'
+
+#{$mainClass}
+    padding: 12px
+    width: 100%
+    max-width: 280px
+    border: 0
+    border-radius: 8px
+    background: $colorBlue
+    font-family: $familyMain
+    font-size: 13px
+    font-weight: normal
+    color: $colorWhite
+    cursor: pointer
+
+    &:hover
+        background: $colorBlue90
+
+
+    &--arrow
+        position: relative
+        width: 34px
+        height: 34px
+        border-radius: 100px
+        text-indent: -9999px
+        &::before
+            content: ''
+            display: block
+            position: absolute
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
+            background: url("/images/icon-arrow.svg") 50% 50% no-repeat

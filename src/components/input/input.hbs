@@ -1,0 +1,11 @@
+<div class='input {{#if mod}} {{mod}}{{/if}}'>
+    <input
+        type='{{ type }}'
+        id='{{ id }}'
+        name='{{ name }}'
+        placeholder=" "
+        {{#if value}}value='{{ value }}'{{/if}}
+        {{#if disabled}}disabled{{/if}}
+    >
+    <label for='{{ id }}'>{{ label }}</label>
+</div>

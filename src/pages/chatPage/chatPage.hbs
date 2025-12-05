@@ -1,0 +1,62 @@
+<section class='page-chat'>
+    <aside class='page-chat_sidebar'>
+        <header class='page-chat_header'>
+            <div class='page-chat_nav'>
+                {{>Link label="Профиль" mod="link--gray link--chevron"}}
+            </div>
+            <div class='page-chat_search'>
+                {{> Input label="Поиск" mod="input--search" }}
+            </div>
+        </header>
+        <ul class='page-chat_list'>
+            {{#each chatList}}
+                {{> ChatListItem data=this }}
+            {{/each}}
+        </ul>
+    </aside>
+    <main class='page-chat_chat'>
+        <header class='page-chat_chat-header'>
+            <div class='page-chat_chat-user'>
+                <div class='page-chat_chat-user-avatar'></div>
+                Вадим
+            </div>
+            <div class='page-chat_menu'>
+                <div class='page-chat_menu-icon'><img src='/images/icon-menu.svg' alt=''></div>
+                <ul class='page-chat_menu-list'>
+                    <li><img src='/images/icon-add.svg' alt=''> Добавить пользователя</li>
+                    <li><img src='/images/icon-delete.svg' alt=''> Удалить пользователя</li>
+                </ul>
+            </div>
+        </header>
+        <section class='page-chat_chat-list'>
+            <div class='page-chat_chat-date'>19 июня</div>
+            <div class='page-chat_chat-message'>
+                <p>Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.</p>
+                <p>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.</p>
+                <div class='page-chat_chat-time'>11:56</div>
+            </div>
+            <div class='page-chat_chat-message page-chat_chat-message--media'>
+                <img src='/images/chat-media.jpg' alt=''>
+                <div class='page-chat_chat-time'>11:56</div>
+            </div>
+            <div class='page-chat_chat-message page-chat_chat-message--user page-chat_chat-message--read'>
+                <p>Круто!</p>
+                <div class='page-chat_chat-time'>11:57</div>
+            </div>
+        </section>
+        <footer class='page-chat_chat-footer'>
+            <div class='page-chat_menu page-chat_menu--up'>
+                <div class='page-chat_menu-icon'><img src='/images/icon-attach.svg' alt=''></div>
+                <ul class='page-chat_menu-list'>
+                    <li><img src='/images/icon-media.svg' alt=''> Фото или Видео</li>
+                    <li><img src='/images/icon-file.svg' alt=''> Файл</li>
+                    <li><img src='/images/icon-geo.svg' alt=''> Локация</li>
+                </ul>
+            </div>
+            <div class='page-chat_chat-input'>
+                {{> Input label="Сообщение" mod="input--message" }}
+            </div>
+            {{> Button label="Отправить" mod="button--arrow" }}
+        </footer>
+    </main>
+</section>
