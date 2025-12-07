@@ -5,7 +5,9 @@
                 {{>Link label="Профиль" mod="link--gray link--chevron"}}
             </div>
             <div class='page-chat_search'>
-                {{> Input label="Поиск" mod="input--search" }}
+                <form action='' method='get'>
+                    {{> Input label="Поиск" mod="input--search" }}
+                </form>
             </div>
         </header>
         <ul class='page-chat_list'>
@@ -21,10 +23,10 @@
                 Вадим
             </div>
             <div class='page-chat_menu'>
-                <div class='page-chat_menu-icon'><img src='/images/icon-menu.svg' alt=''></div>
+                <div class='page-chat_menu-icon'><img src='/images/icon-menu.svg' alt='menu'></div>
                 <ul class='page-chat_menu-list'>
-                    <li><img src='/images/icon-add.svg' alt=''> Добавить пользователя</li>
-                    <li><img src='/images/icon-delete.svg' alt=''> Удалить пользователя</li>
+                    <li><img src='/images/icon-add.svg' alt='add'> Добавить пользователя</li>
+                    <li><img src='/images/icon-delete.svg' alt='delete'> Удалить пользователя</li>
                 </ul>
             </div>
         </header>
@@ -36,7 +38,7 @@
                 <div class='page-chat_chat-time'>11:56</div>
             </div>
             <div class='page-chat_chat-message page-chat_chat-message--media'>
-                <img src='/images/chat-media.jpg' alt=''>
+                <img src='/images/chat-media.jpg' alt='media'>
                 <div class='page-chat_chat-time'>11:56</div>
             </div>
             <div class='page-chat_chat-message page-chat_chat-message--user page-chat_chat-message--read'>
@@ -46,17 +48,19 @@
         </section>
         <footer class='page-chat_chat-footer'>
             <div class='page-chat_menu page-chat_menu--up'>
-                <div class='page-chat_menu-icon'><img src='/images/icon-attach.svg' alt=''></div>
+                <div class='page-chat_menu-icon'><img src='/images/icon-attach.svg' alt='attach'></div>
                 <ul class='page-chat_menu-list'>
-                    <li><img src='/images/icon-media.svg' alt=''> Фото или Видео</li>
-                    <li><img src='/images/icon-file.svg' alt=''> Файл</li>
-                    <li><img src='/images/icon-geo.svg' alt=''> Локация</li>
+                    <li><img src='/images/icon-media.svg' alt='media'> Фото или Видео</li>
+                    <li><img src='/images/icon-file.svg' alt='file'> Файл</li>
+                    <li><img src='/images/icon-geo.svg' alt='geo'> Локация</li>
                 </ul>
             </div>
-            <div class='page-chat_chat-input'>
-                {{> Input label="Сообщение" mod="input--message" }}
-            </div>
-            {{> Button label="Отправить" mod="button--arrow" }}
+            <form action='' method='get'>
+                <div class='page-chat_chat-input'>
+                    {{> Input label="Сообщение" name="message" id="message" mod="input--message" }}
+                </div>
+                {{> Button type="submit" label="Отправить" mod="button--arrow" }}
+            </form>
         </footer>
     </main>
 </section>

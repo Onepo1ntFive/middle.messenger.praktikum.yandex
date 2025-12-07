@@ -39,7 +39,7 @@ $mainClass: '.page-chat'
             right: 0
             width: 220px
             background-color: $colorWhite
-            box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14)
+            box-shadow: 0 0 6px 0 $colorPureBlack15
 
             &::before
                 content: ''
@@ -195,6 +195,12 @@ $mainClass: '.page-chat'
             display: flex
             flex-flow: row nowrap
             align-items: center
+
+            form
+                flex: 1 auto
+                display: flex
+                flex-flow: row nowrap
+                align-items: center
 
         &-header
             padding-bottom: 10px

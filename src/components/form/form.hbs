@@ -1,6 +1,6 @@
 <section class='form'>
     <form action='' method='get'>
-        <div class='form_title'>{{ formData.title }}</div>
+        <h1 class='form_title'>{{ formData.title }}</h1>
         <div class='form_items'>
             {{#each formData.items}}
                 <div class='form_item{{#if this.error }} error{{/if}}'>

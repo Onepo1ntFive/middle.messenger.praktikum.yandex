@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang='en'>
+<html lang='ru'>
 <head>
     <meta charset='UTF-8' />
     <link rel='icon' type='image/svg+xml' href='/vite.svg' />
@@ -9,14 +9,16 @@
 <body>
 <div id='app'></div>
 <nav>
-    <button type='button' data-page='login'>Логин</button>
-    <button type='button' data-page='register'>Регистрация</button>
-    <button type='button' data-page='profile'>Профиль</button>
-    <button type='button' data-page='profile_edit'>Профиль <br> редактирование</button>
-    <button type='button' data-page='profile_password'>Профиль <br> пароль</button>
-    <button type='button' data-page='chat'>Чат</button>
-    <button type='button' data-page='error404'>404</button>
-    <button type='button' data-page='error500'>500</button>
+    <ul>
+        <li><a href='#login' data-page='login'>Логин</a></li>
+        <li><a href='#register' data-page='register'>Регистрация</a></li>
+        <li><a href='#profile' data-page='profile'>Профиль</a></li>
+        <li><a href='#profile_edit' data-page='profile_edit'>Профиль <br> редактирование</a></li>
+        <li><a href='#profile_password' data-page='profile_password'>Профиль <br> пароль</a></li>
+        <li><a href='#chat' data-page='chat'>Чат</a></li>
+        <li><a href='#error404' data-page='error404'>404</a></li>
+        <li><a href='#error500' data-page='error500'>500</a></li>
+    </ul>
 </nav>
 <script type='module' src='/src/main.ts'></script>
 </body>

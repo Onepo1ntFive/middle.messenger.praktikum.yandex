@@ -3,6 +3,7 @@ import { chatList, loginFormData, profileData, registrationFormData } from './de
 import * as Pages from './pages';
 import * as Components from './components';
 
+Handlebars.registerPartial('Avatar', Components.Avatar);
 Handlebars.registerPartial('Input', Components.Input);
 Handlebars.registerPartial('Button', Components.Button);
 Handlebars.registerPartial('Link', Components.Link);
@@ -16,7 +17,7 @@ export default class App {
 
     constructor() {
         this.state = {
-            currentPage: 'login',
+            currentPage: 'profile',
         };
         this.appElement = document.getElementById('app');
     }

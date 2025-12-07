@@ -48,42 +48,6 @@ $mainClass: '.page-profile'
 
     &_avatar
         padding-bottom: 20px
-        text-align: center
-
-        img
-            display: block
-            width: 100%
-
-        button
-            padding: 0
-            margin: 0
-            position: relative
-            border: 0
-            width: 130px
-            height: 130px
-            background: none
-            border-radius: 1000px
-            overflow: hidden
-            cursor: pointer
-
-            &::before
-                content: 'Поменять аватар'
-                padding: 20px
-                display: flex
-                flex-flow: column nowrap
-                align-items: center
-                justify-content: center
-                position: absolute
-                background-color: rgba($colorBlack, 0.6)
-                top: 0
-                left: 0
-                width: 100%
-                height: 100%
-                opacity: 0
-                color: $colorWhite
-
-            &:hover::before
-                opacity: 1
 
     &_btns
         text-align: center
