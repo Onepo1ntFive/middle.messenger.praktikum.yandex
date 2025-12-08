@@ -1,0 +1,71 @@
+@use "../../styles/vars" as *
+$mainClass: '.page-profile'
+
+#{$mainClass}
+    min-height: 100%
+    padding-top: 60px
+
+    &_back
+        margin: 0
+        padding: 0
+        position: fixed
+        left: 0
+        top: 0
+        width: 64px
+        height: 100%
+        border: 0
+        border-right: 1px solid $colorGrayLight
+        background: $colorGrayLighter
+        cursor: pointer
+
+        &:hover
+            background: $colorGrayLight
+
+            &::before
+                opacity: 0.9
+
+        &::before
+            content: ''
+            display: block
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            width: 28px
+            height: 28px
+            background: url("/images/back-arr.svg") 50% 50% no-repeat
+
+    &_content
+        margin-left: auto
+        margin-right: auto
+        width: 510px
+
+    &_nick-name
+        padding-bottom: 60px
+        text-align: center
+        font-size: 16px
+        font-weight: 600
+
+    &_avatar
+        padding-bottom: 20px
+
+    &_btns
+        text-align: center
+
+    &_list
+        padding-bottom: 60px
+
+    &_list-item
+        padding-top: 10px
+        padding-bottom: 10px
+        border-bottom: 1px solid $colorGrayLight
+        display: flex
+        flex-flow: row nowrap
+        justify-content: space-between
+
+        &:last-child
+            border-bottom: 0
+
+        input
+            text-align: right
+            color: $colorGray

@@ -1,0 +1,304 @@
+@use "../../styles/vars" as *
+$mainClass: '.page-chat'
+
+#{$mainClass}
+    height: 100%
+    display: flex
+    flex-flow: row nowrap
+
+    &_sidebar
+        width: 310px
+        display: flex
+        flex-flow: column nowrap
+        background-color: $colorWhiteDark
+        border-right: 1px solid $colorGrayLight
+
+    &_header
+        padding: 20px 10px
+        border-bottom: 1px solid $colorGrayLight
+
+    &_menu
+        position: relative
+
+        &-icon
+            width: 25px
+            border-radius: 100px
+            overflow: hidden
+            cursor: pointer
+
+            img
+                width: 100%
+                display: block
+
+        &-list
+            padding: 15px
+            border-radius: 12px
+            display: none
+            position: absolute
+            top: calc(100% + 20px)
+            right: 0
+            width: 220px
+            background-color: $colorWhite
+            box-shadow: 0 0 6px 0 $colorPureBlack15
+
+            &::before
+                content: ''
+                display: block
+                position: absolute
+                z-index: 1
+                bottom: 100%
+                left: 0
+                height: 20px
+                width: 100%
+
+            img
+                margin-right: 15px
+                display: block
+
+            li
+                display: flex
+                flex-flow: row nowrap
+                align-items: center
+                line-height: 1.25
+                cursor: pointer
+
+                &:not(:last-child)
+                    padding-bottom: 16px
+
+                &:hover
+                    color: $colorBlue
+
+        &:hover
+            #{$mainClass}
+                &_menu
+                    &-list
+                        display: block
+
+                    &-icon
+                        background-color: $colorGrayLight
+
+        &--up
+            #{$mainClass}
+                &_menu
+                    &-icon
+                        width: 32px
+                        height: 32px
+
+                    &-list
+                        top: auto
+                        bottom: calc(100% + 20px)
+                        right: auto
+                        left: 0
+
+                        &::before
+                            bottom: auto
+                            left: 0
+                            top: 100%
+
+    &_nav
+        text-align: right
+
+        &:not(:last-child)
+            padding-bottom: 20px
+
+    &_list
+        padding-left: 10px
+        padding-right: 10px
+        overflow-y: auto
+        flex: 1 auto
+
+        &-item
+            padding: 12px 10px
+            position: relative
+            display: flex
+            flex-flow: row nowrap
+            align-items: center
+            border-bottom: 1px solid $colorGrayLight
+
+            &:last-child
+                border-bottom: 0
+
+            &.active
+                position: relative
+                z-index: 1
+                &::before
+                    content: ''
+                    display: block
+                    position: absolute
+                    left: -10px
+                    top: 2px
+                    right: -10px
+                    bottom: 2px
+                    background-color: $colorBlue10
+                    z-index: -1
+
+        &-avatar
+            width: 47px
+            height: 47px
+            border-radius: 100px
+            overflow: hidden
+            background-color: $colorGrayLight
+
+        &-content
+            padding-left: 10px
+            width: calc(100% - 47px)
+
+        &-header
+            padding-bottom: 4px
+            display: flex
+            flex-flow: row nowrap
+            align-items: center
+            justify-content: space-between
+
+        &-name
+            font-weight: 600
+            font-size: 13px
+
+        &-time
+            font-size: 9px
+            color: $colorGray
+
+        &-message
+            padding-right: 25px
+            line-height: 1.25
+            color: $colorGray
+
+            strong
+                font-weight: bold
+                color: $colorBlack
+
+        &-unread
+            display: flex
+            flex-flow: row nowrap
+            align-items: center
+            justify-content: center
+            position: absolute
+            bottom: 10px
+            right: 10px
+            width: 20px
+            height: 20px
+            border-radius: 20px
+            background-color: $colorBlue
+            font-size: 11px
+            line-height: 0
+            color: $colorWhite
+
+    &_chat
+        padding: 10px 20px
+        width: calc(100% - 310px)
+        display: flex
+        flex-flow: column nowrap
+
+        &-footer
+            padding-top: 10px
+            border-top: 1px solid $colorGrayLight
+            display: flex
+            flex-flow: row nowrap
+            align-items: center
+
+            form
+                flex: 1 auto
+                display: flex
+                flex-flow: row nowrap
+                align-items: center
+
+        &-header
+            padding-bottom: 10px
+            border-bottom: 1px solid $colorGrayLight
+            display: flex
+            flex-flow: row nowrap
+            justify-content: space-between
+            align-items: center
+
+        &-user
+            display: flex
+            flex-flow: row nowrap
+            justify-content: space-between
+            align-items: center
+            font-weight: 600
+
+            &-avatar
+                margin-right: 10px
+                width: 34px
+                height: 34px
+                border-radius: 100px
+                overflow: hidden
+                background-color: $colorGrayLight
+
+        &-list
+            padding-top: 30px
+            padding-bottom: 30px
+            display: flex
+            flex: 1 auto
+            flex-flow: column nowrap
+            justify-content: flex-end
+            overflow-y: auto
+
+        &-date
+            padding-bottom: 30px
+            text-align: center
+            color: $colorGray
+
+        &-message
+            padding: 10px
+            margin-right: auto
+            max-width: 400px
+            margin-bottom: 10px
+            position: relative
+            background: $colorWhiteDark
+            border-radius: 0 12px 12px 12px
+
+            p:not(:first-child),
+            p:not(:first-of-type)
+                padding-top: 1em
+
+            &--media
+                padding: 0
+                border-radius: 12px
+                overflow: hidden
+                border: 1px solid $colorGrayLight
+
+                #{$mainClass}
+                    &_chat
+                        &-time
+                            padding: 2px 7px
+                            background: rgba(82, 82, 82, 0.5)
+                            border-radius: 20px
+                            color: $colorWhite
+
+            &--user
+                padding-right: 40px
+                margin-right: 0
+                margin-left: auto
+                border-radius: 12px 12px 0 12px
+                background: $colorBlueLight
+
+                #{$mainClass}
+                    &_chat
+                        &-time
+                            color: $colorBlue
+
+            &--read
+                padding-right: 60px
+
+                &::before
+                    content: ''
+                    display: block
+                    position: absolute
+                    right: 40px
+                    bottom: 12px
+                    width: 10px
+                    height: 10px
+                    background: url("/images/chat-read.svg") 50% 50% no-repeat
+
+        &-time
+            position: absolute
+            right: 10px
+            bottom: 10px
+            font-size: 10px
+            color: $colorGray
+
+        &-input
+            padding-left: 10px
+            padding-right: 10px
+            flex: 1 auto

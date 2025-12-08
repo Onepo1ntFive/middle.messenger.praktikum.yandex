@@ -1,0 +1,46 @@
+@use '../../styles/vars' as *
+$mainClass: '.avatar'
+
+#{$mainClass}
+    padding: 0
+    margin: 0 auto
+    position: relative
+    border: 0
+    display: block
+    width: 130px
+    height: 130px
+    background: none
+    border-radius: 1000px
+    overflow: hidden
+    text-align: center
+    cursor: pointer
+
+    &::before
+        content: 'Поменять аватар'
+        padding: 20px
+        display: flex
+        flex-flow: column nowrap
+        align-items: center
+        justify-content: center
+        position: absolute
+        background-color: rgba($colorBlack, 0.6)
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        opacity: 0
+        color: $colorWhite
+
+    &:hover::before
+        opacity: 1
+
+    img
+        display: block
+        width: 100%
+
+    input
+        position: absolute
+        opacity: 0
+        left: 0
+        top: 0
+        pointer-events: none

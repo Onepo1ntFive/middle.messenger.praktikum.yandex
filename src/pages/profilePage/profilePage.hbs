@@ -1,0 +1,48 @@
+<main class='page-profile'>
+    <button class='page-profile_back'></button>
+    <section class='page-profile_content'>
+        <form action='' method='get'>
+            <div class='page-profile_avatar'>
+                {{> Avatar }}
+            </div>
+            <div class='page-profile_nick-name'>{{ profileData.display_name }}</div>
+            <div class='page-profile_list'>
+                <div class='page-profile_list-item'>
+                    Почта
+                    {{> Input value=profileData.email type="text" name="email" id="email" disabled=profileData.disabled mod="input--clear" }}
+                </div>
+                <div class='page-profile_list-item'>
+                    Логин
+                    {{> Input value=profileData.login type="text" name="login" id="login" disabled=profileData.disabled mod="input--clear" }}
+                </div>
+                <div class='page-profile_list-item'>
+                    Имя
+                    {{> Input value=profileData.first_name type="text" name="first_name" id="first_name" disabled=profileData.disabled mod="input--clear" }}
+                </div>
+                <div class='page-profile_list-item'>
+                    Фамилия
+                    {{> Input value=profileData.second_name type="text" name="second_name" id="second_name" disabled=profileData.disabled mod="input--clear" }}
+                </div>
+                <div class='page-profile_list-item'>
+                    Имя в чате
+                    {{> Input value=profileData.display_name type="text" name="display_name" id="display_name" disabled=profileData.disabled mod="input--clear" }}
+                </div>
+                <div class='page-profile_list-item'>
+                    Телефон
+                    {{> Input value=profileData.phone type="text" name="phone" id="phone" disabled=profileData.disabled mod="input--clear" }}
+                </div>
+            </div>
+            {{#if profileData.disabled }}
+                <div class='page-profile_list'>
+                    <div class='page-profile_list-item'>{{> Link label="Изменить данные"}}</div>
+                    <div class='page-profile_list-item'>{{> Link label="Изменить пароль"}}</div>
+                    <div class='page-profile_list-item'>{{> Link label="Выйти" mod="link--red"}}</div>
+                </div>
+            {{else}}
+                <div class='page-profile_btns'>
+                    {{> Button type="submit" label="Сохранить" }}
+                </div>
+            {{/if}}
+        </form>
+    </section>
+</main>
