@@ -12,7 +12,7 @@ export default class App {
 
     constructor() {
         this.state = {
-            currentPage: 'chat',
+            currentPage: 'login',
         };
         this.appElement = document.getElementById('app');
     }
