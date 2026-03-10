@@ -1,2 +1,21 @@
 import './index.sass'
-export { default as Button } from './button.hbs?raw';
+import Block, { type Props } from '../../services/Block.ts';
+import template from './button.hbs?raw';
+
+interface ButtonProps extends Props {
+    label: string,
+    type?: string,
+    class?: string,
+}
+
+export class Button extends Block {
+    constructor(props: ButtonProps) {
+        super({
+            ...props
+        });
+    }
+
+    override render(): string {
+        return template;
+    }
+}

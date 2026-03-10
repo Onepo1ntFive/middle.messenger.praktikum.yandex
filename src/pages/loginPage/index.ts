@@ -1,2 +1,51 @@
 import '../../styles/login.sass';
-export { default as LoginPage } from './loginPage.hbs?raw';
+import Block, { type Props } from '../../services/Block.ts';
+import template from './loginPage.hbs?raw';
+import { Button, Form, Input, Link } from '../../components';
+import { loginFormData } from '../../demoData.ts';
+
+interface LoginPageProps extends Props {
+    changePage: (page: string) => void;
+}
+
+export class LoginPage extends Block {
+    constructor(props: LoginPageProps) {
+        super({
+            ...props,
+            Form: new Form({
+                formData: {...loginFormData},
+                inputs: [
+                    new Input({
+                        id: 'login',
+                        name: 'login',
+                        label: 'Логин',
+                        type: 'text',
+                        error: 'Неверный логин',
+                        value: '',
+                    }),
+                    new Input({
+                        id: 'password',
+                        name: 'password',
+                        label: 'Пароль',
+                        type: 'password',
+                        error: null, //false
+                        value: '',
+                    }),
+                ],
+                Link: new Link({
+                    label: 'Нет аккаунта?',
+                    href: '#',
+                }),
+                Button: new Button({
+                    label: 'Авторизоваться',
+                    type: 'submit',
+                }),
+            }),
+        })
+        ;
+    }
+
+    override render() {
+        return template;
+    }
+}

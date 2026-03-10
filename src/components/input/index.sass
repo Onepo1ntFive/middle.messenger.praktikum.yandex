@@ -44,8 +44,20 @@ $mainClass: '.input'
             transform: translateY(-50%)
 
     &--clear
+        width: 100%
+        display: flex
+        flex-flow: row nowrap
+        justify-content: space-between
+
+        label
+            transform: none !important
+            position: static
+            white-space: nowrap
+            color: $colorBlack
+
         input,
         input:disabled
+            order: 1
             padding: 0
             margin: 0
             border: 0

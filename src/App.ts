@@ -1,86 +1,86 @@
-import Handlebars from 'handlebars';
-import { chatList, loginFormData, profileData, registrationFormData } from './demoData.ts'
-import * as Pages from './pages';
-import * as Components from './components';
+import * as Pages from './pages'
 
-Handlebars.registerPartial('Avatar', Components.Avatar);
-Handlebars.registerPartial('Input', Components.Input);
-Handlebars.registerPartial('Button', Components.Button);
-Handlebars.registerPartial('Link', Components.Link);
-Handlebars.registerPartial('ChatListItem', Components.ChatListItem);
-Handlebars.registerPartial('Form', Components.Form);
+interface appState {
+    currentPage: string;
 
+    [key: string]: unknown
+}
 
 export default class App {
-    private appElement: any;
-    private state: { currentPage: string };
+    private readonly appElement: any;
+    private state: appState;
 
     constructor() {
         this.state = {
-            currentPage: 'profile',
+            currentPage: 'chat',
         };
         this.appElement = document.getElementById('app');
     }
 
-    render() {
-        let template;
+    render(): void {
+        if (!this.appElement) return;
         if (this.state.currentPage === 'login') {
-            template = Handlebars.compile(Pages.LoginPage);
-            this.appElement.innerHTML = template({
-                formData: loginFormData,
+            const loginPage = new Pages.LoginPage({
+                changePage: this.changePage,
             });
+            this.appElement.replaceChildren(loginPage.getContent());
         }
         if (this.state.currentPage === 'register') {
-            template = Handlebars.compile(Pages.RegistrationPage);
-            this.appElement.innerHTML = template({
-                formData: registrationFormData,
+            const RegistrationPage = new Pages.RegistrationPage({
+                changePage: this.changePage,
             });
+            this.appElement.replaceChildren(RegistrationPage.getContent());
         }
         if (this.state.currentPage === 'profile') {
-            template = Handlebars.compile(Pages.ProfilePage);
-            profileData.disabled = 1;
-            this.appElement.innerHTML = template({
-                profileData: profileData
+            const ProfilePage = new Pages.ProfilePage({
+                changePage: this.changePage,
+                view: 'profile',
+                disabled: true
             });
+            this.appElement.replaceChildren(ProfilePage.getContent());
         }
         if (this.state.currentPage === 'profile_edit') {
-            template = Handlebars.compile(Pages.ProfilePage);
-            profileData.disabled = 0;
-            this.appElement.innerHTML = template({
-                profileData: profileData
+            const ProfilePage = new Pages.ProfilePage({
+                changePage: this.changePage,
+                view: 'profile',
+                disabled: false
             });
+            this.appElement.replaceChildren(ProfilePage.getContent());
         }
+
         if (this.state.currentPage === 'profile_password') {
-            template = Handlebars.compile(Pages.ProfilePagePassword);
-            profileData.disabled = 0;
-            this.appElement.innerHTML = template({
-                profileData: profileData
+            const ProfilePage = new Pages.ProfilePage({
+                changePage: this.changePage,
+                view: 'password',
+                disabled: false
             });
+            this.appElement.replaceChildren(ProfilePage.getContent());
         }
         if (this.state.currentPage === 'error404') {
-            template = Handlebars.compile(Pages.ErrorPage);
-            this.appElement.innerHTML = template({
-                errorData: {
-                    errorCode: '404',
-                    title: 'Не туда попали'
-                },
+            const ErrorPage = new Pages.ErrorPage({
+                changePage: this.changePage,
+                linkLabel: 'Назад к чатам',
+                title: 'Не туда попали',
+                errorCode: '404',
             });
+            this.appElement.replaceChildren(ErrorPage.getContent());
         }
         if (this.state.currentPage === 'error500') {
-            template = Handlebars.compile(Pages.ErrorPage);
-            this.appElement.innerHTML = template({
-                errorData: {
-                    errorCode: '500',
-                    title: 'Мы уже фиксим'
-                },
+            const ErrorPage = new Pages.ErrorPage({
+                changePage: this.changePage,
+                linkLabel: 'Назад к чатам',
+                title: 'Что то пошло не так',
+                errorCode: '500',
             });
+            this.appElement.replaceChildren(ErrorPage.getContent());
         }
         if (this.state.currentPage === 'chat') {
-            template = Handlebars.compile(Pages.ChatPage);
-            this.appElement.innerHTML = template({
-                chatList: chatList,
+            const ChatPage = new Pages.ChatPage({
+                changePage: this.changePage,
             });
+            this.appElement.replaceChildren(ChatPage.getContent());
         }
+
         this.attachEventListeners();
     }
 

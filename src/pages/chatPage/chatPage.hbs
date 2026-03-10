@@ -2,17 +2,17 @@
     <aside class='page-chat_sidebar'>
         <header class='page-chat_header'>
             <div class='page-chat_nav'>
-                {{>Link label="Профиль" mod="link--gray link--chevron"}}
+                {{{ Link }}}
             </div>
             <div class='page-chat_search'>
                 <form action='' method='get'>
-                    {{> Input label="Поиск" mod="input--search" }}
+                    {{{ InputSearch }}}
                 </form>
             </div>
         </header>
         <ul class='page-chat_list'>
-            {{#each chatList}}
-                {{> ChatListItem data=this }}
+            {{#each chatListItems}}
+                {{{ this }}}
             {{/each}}
         </ul>
     </aside>
@@ -57,9 +57,9 @@
             </div>
             <form action='' method='get'>
                 <div class='page-chat_chat-input'>
-                    {{> Input label="Сообщение" name="message" id="message" mod="input--message" }}
+                    {{{ Input }}}
                 </div>
-                {{> Button type="submit" label="Отправить" mod="button--arrow" }}
+                {{{ Button }}}
             </form>
         </footer>
     </main>
