@@ -19,7 +19,9 @@ export default class Block {
     protected element: HTMLElement | null = null;
     protected id: string = makeUUID();
 
+
     protected props: Props;
+    protected events: Props;
 
     protected eventBus: () => EventBus;
 
@@ -30,6 +32,7 @@ export default class Block {
         const {children, props} = this._getChildren(propsAndChildren);
         this.children = children;
         this.props = this._makePropsProxy(props);
+        this.events = this.props.events || {};
         this.eventBus = () => eventBus;
         
         this._registerEvents(eventBus);
@@ -66,16 +69,20 @@ export default class Block {
     private _addEvents(): void {
         const {events = {}} = this.props;
 
-        Object.keys(events).forEach(eventName => {
-            this.element?.addEventListener(eventName, events[eventName]);
+        this._removeEvents();
+
+        Object.entries(events).forEach(([key, value]) => {
+            const eventName = key as keyof HTMLElementEventMap;
+            const listener = value as EventListener;
+            this.element?.addEventListener(eventName, listener, true);
         });
     }
 
     private _removeEvents(): void {
-        const {events = {}} = this.props;
-
-        Object.keys(events).forEach(eventName => {
-            this.element?.removeEventListener(eventName, events[eventName]);
+        Object.entries(this.events).forEach(([key, value]) => {
+            const eventName = key as keyof HTMLElementEventMap;
+            const listener = value as EventListener;
+            this.element?.removeEventListener(eventName, listener);
         });
     }
 

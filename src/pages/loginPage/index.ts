@@ -20,16 +20,14 @@ export class LoginPage extends Block {
                         name: 'login',
                         label: 'Логин',
                         type: 'text',
-                        error: 'Неверный логин',
-                        value: '',
+                        error: null,
                     }),
                     new Input({
                         id: 'password',
                         name: 'password',
                         label: 'Пароль',
                         type: 'password',
-                        error: null, //false
-                        value: '',
+                        error: null,
                     }),
                 ],
                 Link: new Link({
