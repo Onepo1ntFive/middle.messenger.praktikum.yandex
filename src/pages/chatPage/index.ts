@@ -3,6 +3,7 @@ import Block, { type Props } from '../../services/Block.ts';
 import { Button, ChatListItem, Input, Link } from '../../components';
 import template from './chatPage.hbs?raw';
 import { chatList } from '../../demoData.ts';
+import { type FieldName, FormValidator, validators } from '../../helpers/validation.ts';
 
 
 interface ChatPageProps extends Props {
@@ -11,7 +12,7 @@ interface ChatPageProps extends Props {
 
 export class ChatPage extends Block {
     constructor(props: ChatPageProps) {
-
+        const validator = new FormValidator();
         const chatListItems = chatList.map((el) => {
             return new ChatListItem({
                 id: el.id,
@@ -63,8 +64,15 @@ export class ChatPage extends Block {
                     event.preventDefault();
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
-
-                    console.log(Object.fromEntries(formData.entries()));
+                    const fieldsForValidation = Array.from(formData.entries()).filter(([field,]) => validators[field as FieldName] !== undefined).map(([name, value]) => {
+                        return {[name]: value}
+                    });
+                    const error = validator.validateForm(Object.fromEntries(fieldsForValidation.entries()) as Record<string, unknown>);
+                    if (error) {
+                        console.log('Ошибочки')
+                    } else {
+                        console.log('Сабмитимся')
+                    }
                 }
             },
         });

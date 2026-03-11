@@ -3,6 +3,7 @@ import Block, { type Props } from '../../services/Block.ts';
 import template from './profilePage.hbs?raw';
 import { Avatar, Button, Input, Link } from '../../components';
 import { profileData } from '../../demoData.ts';
+import { type FieldName, FormValidator, validators } from '../../helpers/validation.ts';
 
 export { default as ProfilePagePassword } from './profilePagePassword.hbs?raw';
 
@@ -12,6 +13,7 @@ interface ProfilePageProps extends Props {
 
 export class ProfilePage extends Block {
     constructor(props: ProfilePageProps) {
+        const validator = new FormValidator();
         const profileInputs: Input[] = [
             new Input({
                 label: 'Почта',
@@ -130,8 +132,15 @@ export class ProfilePage extends Block {
                     event.preventDefault();
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);
-
-                    console.log(Object.fromEntries(formData.entries()));
+                    const fieldsForValidation = Array.from(formData.entries()).filter(([field,]) => validators[field as FieldName] !== undefined).map(([name, value]) => {
+                        return {[name]: value}
+                    });
+                    const error = validator.validateForm(Object.fromEntries(fieldsForValidation.entries()) as Record<string, unknown>);
+                    if (error) {
+                        console.log('Ошибочки')
+                    } else {
+                        console.log('Сабмитимся')
+                    }
                 }
             },
         })
