@@ -43,7 +43,7 @@ export class FormValidator {
     }
 
     validateForm(formData: Record<string, unknown>): boolean {
-        Object.values(formData).forEach((field) => {
+        Object.values(formData).forEach((field: Record<string, string>) => {
             const fieldName = Object.keys(field as Record<string, unknown>)[0];
             const fieldValue = field[fieldName];
             if (validators[fieldName as FieldName]) {
