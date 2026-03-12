@@ -5,7 +5,7 @@ enum METHODS {
     DELETE = 'DELETE'
 }
 
-type Data = Record<string, string> | FormData | null;
+type Data = FormData | Record<string, string> | null;
 type HTTPMethod = (url: string, options?: Options) => Promise<XMLHttpRequest>;
 
 type Options = {
@@ -52,7 +52,7 @@ class HTTPTransport {
 
             const xhr = new XMLHttpRequest();
 
-            xhr.open(method, method === METHODS.GET && !!data ? `${ url }${ queryStringify(data) }` : url);
+            xhr.open(method, method === METHODS.GET && !!data ? `${ url }${ queryStringify(data as Record<string, unknown>) }` : url);
 
             xhr.onload = function () {
                 resolve(xhr);
@@ -66,7 +66,7 @@ class HTTPTransport {
             if (method === METHODS.GET || !data) {
                 xhr.send();
             } else {
-                xhr.send(data);
+                xhr.send(data as FormData);
             }
         });
     };
