@@ -12,7 +12,7 @@
     },
     "include": [
         "src/**/*.ts",
-        ".eslintrc.cjs",
+        ".eslintrc.ts",
         "vite-env.d.ts"
     ]
 }
