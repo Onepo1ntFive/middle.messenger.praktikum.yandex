@@ -1,8 +1,8 @@
 import '../../styles/login.sass';
-import Block, { type Props } from '../../services/Block.ts';
+import Block, { type Props } from '../../services/Block';
 import template from './loginPage.hbs?raw';
 import { Button, Form, Input, Link } from '../../components';
-import { loginFormData } from '../../demoData.ts';
+import { loginFormData } from '../../demoData';
 
 interface LoginPageProps extends Props {
     changePage: (page: string) => void;

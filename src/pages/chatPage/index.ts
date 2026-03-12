@@ -1,9 +1,9 @@
 import './index.sass';
-import Block, { type Props } from '../../services/Block.ts';
+import Block, { type Props } from '../../services/Block';
 import { Button, ChatListItem, Input, Link } from '../../components';
 import template from './chatPage.hbs?raw';
-import { chatList } from '../../demoData.ts';
-import { type FieldName, FormValidator, validators } from '../../helpers/validation.ts';
+import { chatList } from '../../demoData';
+import { type FieldName, FormValidator, validators } from '../../helpers/validation';
 
 
 interface ChatPageProps extends Props {

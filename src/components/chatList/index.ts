@@ -1,4 +1,4 @@
-import Block, { type Props } from '../../services/Block.ts';
+import Block, { type Props } from '../../services/Block';
 
 import template from './chatListItem.hbs?raw';
 

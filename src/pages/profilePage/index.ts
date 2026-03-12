@@ -1,9 +1,9 @@
 import './index.sass';
-import Block, { type Props } from '../../services/Block.ts';
+import Block, { type Props } from '../../services/Block';
 import template from './profilePage.hbs?raw';
 import { Avatar, Button, Input, Link } from '../../components';
-import { profileData } from '../../demoData.ts';
-import { type FieldName, FormValidator, validators } from '../../helpers/validation.ts';
+import { profileData } from '../../demoData';
+import { type FieldName, FormValidator, validators } from '../../helpers/validation';
 
 export { default as ProfilePagePassword } from './profilePagePassword.hbs?raw';
 

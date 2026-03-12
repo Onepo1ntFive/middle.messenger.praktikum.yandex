@@ -1,8 +1,8 @@
 import '../../styles/login.sass';
-import Block, { type Props } from '../../services/Block.ts';
+import Block, { type Props } from '../../services/Block';
 import template from './registrationPage.hbs?raw';
 import { Button, Form, Input, Link } from '../../components';
-import { registrationFormData } from '../../demoData.ts';
+import { registrationFormData } from '../../demoData';
 
 interface RegistrationPageProps extends Props {
     changePage: (page: string) => void;

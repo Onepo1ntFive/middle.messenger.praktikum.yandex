@@ -1,7 +1,7 @@
 import './index.sass'
-import Block, { type Props } from '../../services/Block.ts';
+import Block, { type Props } from '../../services/Block';
 import template from './input.hbs?raw';
-import { type FieldName, FormValidator } from '../../helpers/validation.ts';
+import { type FieldName, FormValidator } from '../../helpers/validation';
 
 interface InputProps extends Props {
     type?: string,
