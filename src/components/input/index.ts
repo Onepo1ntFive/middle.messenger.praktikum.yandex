@@ -24,7 +24,6 @@ export class Input extends Block {
                     const input = event.target as HTMLInputElement;
                     if (props.name) {
                         const error = validator.validateField(props.name as FieldName, input.value);
-                        console.log(error)
                         this.setProps({
                             ...props,
                             value: input.value,
