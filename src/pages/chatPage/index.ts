@@ -60,7 +60,7 @@ export class ChatPage extends Block {
                 class: 'link--gray link--chevron',
             }),
             events: {
-                submit: (event) => {
+                submit: (event: Event) => {
                     event.preventDefault();
                     const form = event.target as HTMLFormElement;
                     const formData = new FormData(form);

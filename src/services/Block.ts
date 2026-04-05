@@ -34,7 +34,7 @@ export default class Block {
         this.props = this._makePropsProxy(props);
         this.events = this.props.events || {};
         this.eventBus = () => eventBus;
-        
+
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
     }
@@ -190,7 +190,7 @@ export default class Block {
     private _makePropsProxy(props: Props): Props {
         const self = this;
 
-        const proxyProps = new Proxy(props, {
+        return new Proxy(props, {
             get(target: Props, prop: string) {
                 if (prop.indexOf('_') === 0) {
                     throw new Error('Нет доступа');
@@ -215,7 +215,5 @@ export default class Block {
                 throw new Error('Нет доступа');
             },
         });
-
-        return proxyProps;
     }
 }

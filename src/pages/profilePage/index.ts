@@ -23,6 +23,7 @@ export class ProfilePage extends Block {
                 id: 'email',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
             new Input({
                 label: 'Логин',
@@ -32,6 +33,7 @@ export class ProfilePage extends Block {
                 id: 'login',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
             new Input({
                 label: 'Имя',
@@ -41,6 +43,7 @@ export class ProfilePage extends Block {
                 id: 'first_name',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
             new Input({
                 label: 'Фамилия',
@@ -50,6 +53,7 @@ export class ProfilePage extends Block {
                 id: 'second_name',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
             new Input({
                 label: 'Имя в чате',
@@ -59,6 +63,7 @@ export class ProfilePage extends Block {
                 id: 'display_name',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
             new Input({
                 label: 'Телефон',
@@ -68,6 +73,7 @@ export class ProfilePage extends Block {
                 id: 'phone',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
         ];
         const passwordInputs: Input[] = [
@@ -78,17 +84,19 @@ export class ProfilePage extends Block {
                 id: 'oldPassword',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
             new Input({
-                label: 'Логин',
+                label: 'Новый пароль',
                 type: 'password',
                 name: 'newPassword',
                 id: 'newPassword',
                 disabled: props.disabled as boolean,
                 class: 'input--clear',
+                error: null,
             }),
             new Input({
-                label: 'Новый пароль',
+                label: 'Новый пароль (повтор)',
                 type: 'password',
                 name: 'newPasswordRepeat',
                 id: 'newPasswordRepeat',

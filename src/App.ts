@@ -7,7 +7,7 @@ interface appState {
 }
 
 export default class App {
-    private readonly appElement: any;
+    private readonly appElement: HTMLElement | null;
     private state: appState;
 
     constructor() {
