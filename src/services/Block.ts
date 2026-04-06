@@ -4,6 +4,7 @@ import { v4 as makeUUID } from 'uuid';
 
 export interface Props {
     [key: string]: unknown;
+
     attr?: Record<string, string>;
     events?: Record<string, EventListener>;
 }
@@ -88,7 +89,7 @@ export default class Block {
 
     protected addAttributes(): void {
         const {attr = {}} = this.props;
-        
+
         Object.entries(attr).forEach(([key, value]) => {
             this.element?.setAttribute(key, value as string);
         });
@@ -143,10 +144,10 @@ export default class Block {
 
     private _render(): void {
         const currentProps = {...this.props};
-        
+
         Object.entries(this.children).forEach(([key, child]) => {
             if (Array.isArray(child)) {
-                currentProps[key] = child.map(c => `<div data-id="${c.id}"></div>`);
+                currentProps[key] = child.map(c => `<div data-id='${ c.id }'></div>`);
             } else {
                 currentProps[key] = `<div data-id='${ child.id }'></div>`;
             }
@@ -158,13 +159,13 @@ export default class Block {
         Object.values(this.children).forEach((child) => {
             if (Array.isArray(child)) {
                 child.forEach(c => {
-                    const stub = fragment.content.querySelector(`[data-id="${c.id}"]`);
+                    const stub = fragment.content.querySelector(`[data-id="${ c.id }"]`);
                     if (stub) {
                         stub.replaceWith(c.getContent());
                     }
                 });
             } else {
-                const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+                const stub = fragment.content.querySelector(`[data-id="${ child.id }"]`);
                 if (stub) {
                     stub.replaceWith(child.getContent());
                 }
@@ -188,8 +189,6 @@ export default class Block {
     }
 
     private _makePropsProxy(props: Props): Props {
-        const self = this;
-
         return new Proxy(props, {
             get(target: Props, prop: string) {
                 if (prop.indexOf('_') === 0) {
@@ -207,7 +206,7 @@ export default class Block {
 
                 const oldTarget = {...target};
                 target[prop] = value;
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                 return true;
             },
 

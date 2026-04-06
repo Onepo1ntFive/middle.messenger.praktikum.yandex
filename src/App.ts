@@ -87,13 +87,17 @@ export default class App {
     attachEventListeners() {
         const nav = document.querySelectorAll('[data-page]');
         nav.forEach(button => {
-            button.addEventListener('click', (event: any) => {
-                this.changePage(event.target?.dataset?.page);
+            button.addEventListener('click', (event: Event) => {
+                const target = event.target as HTMLElement;
+                this.changePage(target.dataset?.page);
             });
         });
     }
 
-    changePage(page: string) {
+    changePage(page: string | undefined) {
+        if (!page) {
+            return
+        }
         this.state.currentPage = page;
         this.render();
     }
