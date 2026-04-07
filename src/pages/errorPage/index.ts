@@ -3,7 +3,6 @@ import Block, { type Props } from '../../services/Block';
 import template from './errorPage.hbs?raw';
 import { Link } from '../../components';
 
-
 interface ErrorPageProps extends Props {
     changePage: (page: string) => void;
 }

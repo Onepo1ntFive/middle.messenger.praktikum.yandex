@@ -4,7 +4,6 @@ import template from './form.hbs?raw';
 import type { Input } from '../input';
 import { submitForm } from '../../helpers/form';
 
-
 interface FormProps extends Props {
     formData: Record<string, unknown>,
     inputs: Input[];

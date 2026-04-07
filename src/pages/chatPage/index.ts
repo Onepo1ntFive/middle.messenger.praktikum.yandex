@@ -5,7 +5,6 @@ import template from './chatPage.hbs?raw';
 import { chatList } from '../../demoData';
 import { submitForm } from '../../helpers/form';
 
-
 interface ChatPageProps extends Props {
     changePage: (page: string) => void;
 }

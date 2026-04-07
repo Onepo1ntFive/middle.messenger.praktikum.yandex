@@ -11,7 +11,6 @@ export const profileData = {
     disabled: true,
 }
 
-
 export const loginFormData = {
     title: 'Вход',
     submit: 'Авторизоваться',

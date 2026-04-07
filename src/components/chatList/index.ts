@@ -2,7 +2,6 @@ import Block, { type Props } from '../../services/Block';
 
 import template from './chatListItem.hbs?raw';
 
-
 interface ChatListItemProps extends Props {
     id?: string;
     date?: string;

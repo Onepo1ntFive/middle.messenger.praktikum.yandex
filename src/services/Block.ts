@@ -20,7 +20,6 @@ export default class Block {
     protected element: HTMLElement | null = null;
     protected id: string = makeUUID();
 
-
     protected props: Props;
     protected events: Props;
 
@@ -94,7 +93,6 @@ export default class Block {
             this.element?.setAttribute(key, value as string);
         });
     }
-
 
     protected init(): void {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -178,7 +176,6 @@ export default class Block {
                 }
             }
         });
-
 
         const newElement = fragment.content.firstElementChild as HTMLElement;
         if (this.element && newElement) {
