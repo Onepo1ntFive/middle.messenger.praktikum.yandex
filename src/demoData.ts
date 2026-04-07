@@ -4,7 +4,7 @@ export const profileData = {
     display_name: 'Иван',
     login: 'ivan',
     email: 'ivan@ivanovo.ru',
-    phone: '+7 (987) 654 32 10',
+    phone: '+7987654321',
     avatar: null,
     oldPassword: 'oldPassword',
     newPassword: '',

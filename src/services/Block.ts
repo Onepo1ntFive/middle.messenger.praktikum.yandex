@@ -130,6 +130,13 @@ export default class Block {
         return this.element;
     }
 
+    public getProps(): Props {
+        if (!this.props) {
+            throw new Error('Нет пропсов');
+        }
+        return this.props;
+    }
+
     private _createDocumentElement(tagName: string): HTMLTemplateElement {
         return document.createElement(tagName) as HTMLTemplateElement;
     }
@@ -189,6 +196,8 @@ export default class Block {
     }
 
     private _makePropsProxy(props: Props): Props {
+        const self: this = this;
+
         return new Proxy(props, {
             get(target: Props, prop: string) {
                 if (prop.indexOf('_') === 0) {
@@ -206,7 +215,7 @@ export default class Block {
 
                 const oldTarget = {...target};
                 target[prop] = value;
-                this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                 return true;
             },
 

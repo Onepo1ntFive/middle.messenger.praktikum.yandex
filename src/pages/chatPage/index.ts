@@ -3,7 +3,7 @@ import Block, { type Props } from '../../services/Block';
 import { Button, ChatListItem, Input, Link } from '../../components';
 import template from './chatPage.hbs?raw';
 import { chatList } from '../../demoData';
-import { type FieldName, FormValidator, validators } from '../../helpers/validation';
+import { submitForm } from '../../helpers/form';
 
 
 interface ChatPageProps extends Props {
@@ -12,7 +12,6 @@ interface ChatPageProps extends Props {
 
 export class ChatPage extends Block {
     constructor(props: ChatPageProps) {
-        const validator = new FormValidator();
         const chatListItems = chatList.map((el) => {
             return new ChatListItem({
                 id: el.id,
@@ -42,11 +41,7 @@ export class ChatPage extends Block {
                 class: 'input--search',
                 events: {
                     submit: (event) => {
-                        event.preventDefault();
-                        const form = event.target as HTMLFormElement;
-                        const formData = new FormData(form);
-
-                        console.log(Object.fromEntries(formData.entries()));
+                        submitForm(event, [this.children.InputSearch as Input])
                     }
                 }
             }),
@@ -61,18 +56,7 @@ export class ChatPage extends Block {
             }),
             events: {
                 submit: (event: Event) => {
-                    event.preventDefault();
-                    const form = event.target as HTMLFormElement;
-                    const formData = new FormData(form);
-                    const fieldsForValidation = Array.from(formData.entries()).filter(([field,]) => validators[field as FieldName] !== undefined).map(([name, value]) => {
-                        return {[name]: value}
-                    });
-                    const error = validator.validateForm(Object.fromEntries(fieldsForValidation.entries()) as Record<string, unknown>);
-                    if (error) {
-                        console.log('Ошибочки')
-                    } else {
-                        console.log('Сабмитимся')
-                    }
+                    submitForm(event, [this.children.Input as Input])
                 }
             },
         });

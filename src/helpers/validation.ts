@@ -1,5 +1,5 @@
 const latinCyrillicRegex = /^[A-ZА-ЯЁ][a-zа-яё-]*$/;
-const passwordRegex = /^[A-ZА-ЯЁ][a-zа-яё-]*$/;
+const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!*$#@]{8,40}$/;
 const messages: Record<string, string> = {
     latinCyrillic: 'Допускается латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис).',
     notEmpty: 'Поле не должно быть пустым',
@@ -25,6 +25,9 @@ export const validators = {
         return regex.test(value) ? null : messages.email;
     },
     password: (value: string): string | null => {
+        return passwordRegex.test(value) ? null : messages.password;
+    },
+    oldPassword: (value: string): string | null => {
         return passwordRegex.test(value) ? null : messages.password;
     },
     newPassword: (value: string): string | null => {
@@ -54,14 +57,13 @@ export class FormValidator {
     }
 
     validateForm(formData: Record<string, unknown>): boolean {
-        Object.values(formData).forEach((field: Record<string, string>) => {
-            const fieldName = Object.keys(field as Record<string, unknown>)[0];
-            const fieldValue = field[fieldName];
-            if (validators[fieldName as FieldName]) {
-                this.validateField(fieldName as FieldName, fieldValue);
+        Object.keys(formData).forEach((fieldName: FieldName) => {
+            const fieldValue = formData[fieldName];
+            if (validators[fieldName as FieldName] !== undefined) {
+                this.validateField(fieldName as FieldName, fieldValue as string);
             }
         });
-        return Object.values(this.errorFields).every(error => error !== null);
+        return Object.keys(this.errorFields).some(error => this.errorFields[`${ error }`] !== null);
     }
 
     getErrors(): Record<string, string | null> {
