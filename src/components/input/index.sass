@@ -28,6 +28,11 @@ $mainClass: '.input'
         pointer-events: none
         color: $colorGray
 
+    & + .error
+        padding-top: 8px
+        font-size: 12px
+        color: $colorRed
+
     &--message
         input
             padding: 10px 20px
@@ -44,8 +49,20 @@ $mainClass: '.input'
             transform: translateY(-50%)
 
     &--clear
+        width: 100%
+        display: flex
+        flex-flow: row nowrap
+        justify-content: space-between
+
+        label
+            transform: none !important
+            position: static
+            white-space: nowrap
+            color: $colorBlack
+
         input,
         input:disabled
+            order: 1
             padding: 0
             margin: 0
             border: 0

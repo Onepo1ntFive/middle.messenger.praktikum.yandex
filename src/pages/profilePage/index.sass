@@ -63,9 +63,16 @@ $mainClass: '.page-profile'
         flex-flow: row nowrap
         justify-content: space-between
 
+        & > div
+            width: 100%
+            display: flex
+            flex-flow: row wrap
+            justify-content: space-between
+
         &:last-child
             border-bottom: 0
 
         input
+            margin-left: 20px
             text-align: right
             color: $colorGray

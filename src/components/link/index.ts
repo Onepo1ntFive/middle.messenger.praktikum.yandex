@@ -1,2 +1,21 @@
 import './index.sass'
-export { default as Link } from './link.hbs?raw';
+import Block, { type Props } from '../../services/Block';
+import template from './link.hbs?raw';
+
+interface LabelProps extends Props {
+    href?: string,
+    label?: string,
+    class?: string,
+}
+
+export class Link extends Block {
+    constructor(props: LabelProps) {
+        super({
+            ...props
+        });
+    }
+
+    override render(): string {
+        return template;
+    }
+}
