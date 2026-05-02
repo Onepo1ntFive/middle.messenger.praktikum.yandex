@@ -135,6 +135,10 @@ export default class Block {
         return this.props;
     }
 
+    public hide(): void {
+        this.getContent().style.display = 'none';
+    }
+
     private _createDocumentElement(tagName: string): HTMLTemplateElement {
         return document.createElement(tagName) as HTMLTemplateElement;
     }

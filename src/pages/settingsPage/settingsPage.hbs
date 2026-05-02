@@ -1,0 +1,14 @@
+<main class='page-profile'>
+    {{#if isLoading }}
+        <div class='loader'></div>
+    {{/if}}
+    {{{ ButtonBack }}}
+    <section class='page-profile_content'>
+        {{#if settings.showProfile }}
+            {{{ profilePage }}}
+        {{/if}}
+        {{#if settings.showPassword }}
+            {{{ passwordPage }}}
+        {{/if}}
+    </section>
+</main>

@@ -1,3 +1,5 @@
+import { BASE_URL } from '../consts/consts';
+
 enum METHODS {
     GET = 'GET',
     POST = 'POST',
@@ -36,9 +38,13 @@ function queryStringify(
     }, '?');
 }
 
-class HTTPTransport {
+function isPlainObject(data: unknown): data is Record<string, string> {
+    return typeof data === 'object' && data !== null && !(data instanceof FormData) && !(data instanceof URLSearchParams);
+}
+
+export default class HTTPTransport {
     private createMethod(method: METHODS): HTTPMethod {
-        return (url, options = {}) => this.request(url, {...options, method});
+        return (url, options = {}): Promise<unknown> => this.request(url, {...options, method});
     }
 
     public get = this.createMethod(METHODS.GET);
@@ -60,11 +66,11 @@ class HTTPTransport {
 
             const requestUrl =
                 isGet && data
-                    ? `${ url }${ queryStringify(
-                        data as Record<string, string | number | boolean>
-                    ) }`
-                    : url;
-            xhr.open(method, requestUrl);
+                    ? `${ BASE_URL }${ url }${ queryStringify(data as Record<string, string | number | boolean>)}`
+                    : `${ BASE_URL }${ url }`;
+            xhr.open(method, requestUrl, true);
+
+            xhr.withCredentials = true;
 
             Object.keys(headers).forEach((key) => {
                 xhr.setRequestHeader(key, headers[key]);
@@ -89,11 +95,14 @@ class HTTPTransport {
 
             if (isGet || !data) {
                 xhr.send();
+            } else if (data instanceof FormData || data instanceof URLSearchParams) {
+                xhr.send(data);
+            } else if (isPlainObject(data)) {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(data));
             } else {
-                xhr.send(data as XMLHttpRequestBodyInit);
+                xhr.send(data as unknown as XMLHttpRequestBodyInit);
             }
         });
     }
 }
-
-export default HTTPTransport;

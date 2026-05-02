@@ -19,8 +19,12 @@
     <main class='page-chat_chat'>
         <header class='page-chat_chat-header'>
             <div class='page-chat_chat-user'>
-                <div class='page-chat_chat-user-avatar'></div>
-                Вадим
+                <div class='page-chat_chat-user-avatar'>
+                    {{#if user.avatar }}
+                    <img src='https://ya-praktikum.tech/api/v2/resources{{{user.avatar}}}' alt=''>
+                    {{/if}}
+                </div>
+                {{{user.display_name}}}
             </div>
             <div class='page-chat_menu'>
                 <div class='page-chat_menu-icon'><img src='/images/icon-menu.svg' alt='menu'></div>

@@ -4,6 +4,24 @@ $mainClass: '.page-profile'
 #{$mainClass}
     min-height: 100%
     padding-top: 60px
+    &::before
+        content: ''
+        opacity: 0
+        display: block
+        position: fixed
+        z-index: 9999
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-color: $colorWhite50
+        pointer-events: none
+        transition: opacity 0.3s ease-in-out
+
+    &.loading
+        &::before
+            pointer-events: all
+            opacity: 1
 
     &_back
         margin: 0
@@ -16,6 +34,7 @@ $mainClass: '.page-profile'
         border: 0
         border-right: 1px solid $colorGrayLight
         background: $colorGrayLighter
+        text-indent: -9999px
         cursor: pointer
 
         &:hover
@@ -55,6 +74,12 @@ $mainClass: '.page-profile'
     &_list
         padding-bottom: 60px
 
+        &.editable
+            input
+                pointer-events: all
+                color: $colorBlack
+
+
     &_list-item
         padding-top: 10px
         padding-bottom: 10px
@@ -76,3 +101,4 @@ $mainClass: '.page-profile'
             margin-left: 20px
             text-align: right
             color: $colorGray
+            pointer-events: none
