@@ -5,6 +5,24 @@ $mainClass: '.page-chat'
     height: 100%
     display: flex
     flex-flow: row nowrap
+    &::before
+        content: ''
+        opacity: 0
+        display: block
+        position: fixed
+        z-index: 9999
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-color: $colorWhite50
+        pointer-events: none
+        transition: opacity 0.3s ease-in-out
+
+    &.loading
+        &::before
+            pointer-events: all
+            opacity: 1
 
     &_sidebar
         width: 310px
@@ -111,6 +129,7 @@ $mainClass: '.page-chat'
             flex-flow: row nowrap
             align-items: center
             border-bottom: 1px solid $colorGrayLight
+            cursor: pointer
 
             &:last-child
                 border-bottom: 0
@@ -123,9 +142,18 @@ $mainClass: '.page-chat'
                     content: ''
                     display: block
                     position: absolute
-                    inset: 2px -10px -10px 2px
+                    inset: 0
                     background-color: $colorBlue10
                     z-index: -1
+
+            form
+                display: flex
+                flex-flow: row nowrap
+                align-items: center
+                width: 100%
+
+                & > div
+                    flex: 1 auto
 
         &-avatar
             width: 47px
@@ -192,6 +220,16 @@ $mainClass: '.page-chat'
         width: calc(100% - 310px)
         display: flex
         flex-flow: column nowrap
+        position: relative
+
+        &-nochat
+            padding: 5px 10px
+            border-radius: 5px
+            background-color: $colorGrayLight
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
 
         &-footer
             padding-top: 10px

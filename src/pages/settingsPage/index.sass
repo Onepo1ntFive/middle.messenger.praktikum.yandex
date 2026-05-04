@@ -4,24 +4,6 @@ $mainClass: '.page-profile'
 #{$mainClass}
     min-height: 100%
     padding-top: 60px
-    &::before
-        content: ''
-        opacity: 0
-        display: block
-        position: fixed
-        z-index: 9999
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
-        background-color: $colorWhite50
-        pointer-events: none
-        transition: opacity 0.3s ease-in-out
-
-    &.loading
-        &::before
-            pointer-events: all
-            opacity: 1
 
     &_back
         margin: 0
@@ -64,6 +46,9 @@ $mainClass: '.page-profile'
         text-align: center
         font-size: 16px
         font-weight: 600
+
+        span
+            color: $colorGray
 
     &_avatar
         padding-bottom: 20px

@@ -59,14 +59,8 @@ export type TSettings = {
     showProfile: boolean,
     editProfile: boolean,
     showPassword: boolean,
+    currentChatId: number,
 }
-
-
-export type TPassword = {
-    oldPassword: string;
-    newPassword: string;
-};
-
 
 export interface IState {
     isLoading: boolean,
@@ -75,7 +69,6 @@ export interface IState {
     chats: Array<TChatDetails>,
     currentChat: {
         id: number | null,
-        chatDetails: null,
         chatUsers: Array<Omit<TUserDetails, 'phone' | 'email'> & { role: string }>,
         messages: Array<TMessage>,
     },
@@ -122,7 +115,6 @@ export default new Store({
     chats: [],
     currentChat: {
         id: null,
-        chatDetails: null,
         chatUsers: [],
         messages: [],
     },
@@ -130,6 +122,7 @@ export default new Store({
         showProfile: true,
         editProfile: false,
         showPassword: false,
+        currentChatId: 0,
     },
     searchResults: [],
     websocket: null,

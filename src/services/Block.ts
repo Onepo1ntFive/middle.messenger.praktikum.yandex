@@ -164,7 +164,7 @@ export default class Block {
 
         const fragment = this._createDocumentElement('template');
         fragment.innerHTML = Handlebars.compile(this.render())(currentProps);
-
+        
         Object.values(this.children).forEach((child) => {
             if (Array.isArray(child)) {
                 child.forEach(c => {
@@ -180,7 +180,7 @@ export default class Block {
                 }
             }
         });
-
+        
         const newElement = fragment.content.firstElementChild as HTMLElement;
         if (this.element && newElement) {
             this._removeEvents();

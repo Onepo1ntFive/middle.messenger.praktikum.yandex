@@ -2,7 +2,7 @@
     <div class='page-profile_avatar'>
         {{{ Avatar }}}
     </div>
-    <div class='page-profile_nick-name'>{{{ user.display_name }}}</div>
+    <div class='page-profile_nick-name'>{{{ user.display_name }}} <span>{{{user.id}}}</span></div>
     <div class='page-profile_list{{#if settings.editProfile }} editable{{/if}}'>
         {{# each inputs }}
             <div class='page-profile_list-item'>
