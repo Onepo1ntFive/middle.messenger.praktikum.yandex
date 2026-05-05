@@ -1,7 +1,7 @@
 import EventBus from '../services/EventBus';
 import set from '../helpers/set';
 
-export type Indexed<T = any> = {
+export type Indexed<T = unknown> = {
     [key in string]: T;
 };
 

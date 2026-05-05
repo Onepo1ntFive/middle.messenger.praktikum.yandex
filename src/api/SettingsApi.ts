@@ -8,7 +8,6 @@ const options = {
     },
 };
 
-
 export default class SettingsApi extends BaseApi {
     static saveUserData(data: TProfileDetails) {
         return new HTTPTransport().put('/user/profile', {...options, data});

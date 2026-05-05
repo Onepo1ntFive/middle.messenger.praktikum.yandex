@@ -5,7 +5,9 @@ import { Link } from '../../components';
 import { Routes } from '../../consts/consts';
 import Router from '../../services/Router';
 
-interface ErrorPageProps extends Props {}
+interface ErrorPageProps extends Props {
+    [key: string]: unknown;
+}
 
 export class ErrorPage extends Block {
     constructor(props: ErrorPageProps) {

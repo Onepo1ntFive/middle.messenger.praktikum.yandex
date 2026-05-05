@@ -78,7 +78,7 @@ class ChatMenu extends Block {
     }
 
     private async getChatUsers() {
-        let state = Store.getState();
+        const state = Store.getState();
         await ChatController.getChatUsers(state.currentChat.id).then((response: Response) => {
             if (response.status !== 200) {
                 alert(`${ response.status }`);
@@ -129,7 +129,7 @@ class ChatMenu extends Block {
 
     protected componentDidUpdate(): boolean {
         const state = Store.getState()
-        const props: Record<any, any> = this.props;
+        const props: ChatListItemProps = this.props;
         if (isEqualArray(state.currentChat.chatUsers, props.chatUsers)) {
             this.updateChatMenuItems();
         }
@@ -145,7 +145,6 @@ class ChatMenu extends Block {
         return template;
     }
 }
-
 
 function mapUserToProps(state: Indexed): {
     currentChat: TChatDetails,

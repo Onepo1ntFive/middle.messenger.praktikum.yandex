@@ -10,7 +10,9 @@ import { Button } from '../../components';
 import Router from '../../services/Router';
 import { Routes } from '../../consts/consts';
 
-interface SettingsPageProps extends Props {}
+interface SettingsPageProps extends Props {
+    [key: string]: unknown;
+}
 
 class SettingsPage extends Block {
     constructor(props: SettingsPageProps) {

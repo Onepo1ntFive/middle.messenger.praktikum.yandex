@@ -24,7 +24,7 @@ export class ChatPage extends Block {
             ChatsList: new ChatList({
                 chatItems: [],
                 onCurrentChatUpdate: () => {
-                    let state = Store.getState();
+                    const state = Store.getState();
                     this.setProps({
                         currentChat: state.currentChat,
                         settings: {

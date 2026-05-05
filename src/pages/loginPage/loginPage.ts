@@ -12,6 +12,7 @@ import Store, { Indexed } from '../../services/Store';
 import connect from '../../services/connectStore';
 
 interface LoginPageProps extends Props {
+    [key: string]: unknown;
 }
 
 class LoginPage extends Block {
