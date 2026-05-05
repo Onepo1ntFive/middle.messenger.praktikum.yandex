@@ -59,6 +59,9 @@ $mainClass: '.page-chat'
             background-color: $colorWhite
             box-shadow: 0 0 6px 0 $colorPureBlack15
 
+            &.active
+                display: block
+
             &::before
                 content: ''
                 display: block
@@ -80,20 +83,27 @@ $mainClass: '.page-chat'
                 line-height: 1.25
                 cursor: pointer
 
+                & > div
+                    flex: 1 auto
+
                 &:not(:last-child)
                     padding-bottom: 16px
 
                 &:hover
                     color: $colorBlue
 
-        &:hover
-            #{$mainClass}
-                &_menu
-                    &-list
-                        display: block
+            &--users
+                width: 300px
 
-                    &-icon
-                        background-color: $colorGrayLight
+                li
+                    display: flex
+                    flex-flow: row nowrap
+                    justify-content: space-between
+
+                    span
+                        padding-left: 5px
+                        padding-right: 5px
+                        margin-left: auto
 
         &--up
             #{$mainClass}

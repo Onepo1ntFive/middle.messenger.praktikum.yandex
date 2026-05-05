@@ -9,12 +9,12 @@ import Store, { Indexed, TChatDetails, TUserDetails } from '../../services/Store
 import connect from '../../services/connectStore';
 import ChatController from '../../controller/ChatController';
 import { ChatList } from '../../components/chatList';
+import { ChatMenu } from '../../components/chatMenu';
 
 interface ChatPageProps extends Props {
     ChatsList: Block;
     chatItems: TChatDetails[];
     currentChat: TChatDetails,
-    onChatsUpdate: void;
 }
 
 export class ChatPage extends Block {
@@ -24,7 +24,7 @@ export class ChatPage extends Block {
             ChatsList: new ChatList({
                 chatItems: [],
                 onCurrentChatUpdate: () => {
-                    const state = Store.getState();
+                    let state = Store.getState();
                     this.setProps({
                         currentChat: state.currentChat,
                         settings: {
@@ -61,13 +61,18 @@ export class ChatPage extends Block {
                 id: 'newChatName',
                 value: '',
             }),
+            ChatMenu: new ChatMenu({
+                menuActive: false,
+            }),
             ButtonNew: new Button({
                 type: 'button',
                 label: 'Создать',
                 class: 'button--add',
                 events: {
                     click: () => {
-                        Store.set('isLoading', true);
+                        this.setProps({
+                            isLoading: true,
+                        })
                         const title: string = this.children.InputNew.props.value;
                         ChatController.createChat({title: title}).then(async (response) => {
                             if (response.status !== 200) {
@@ -76,7 +81,9 @@ export class ChatPage extends Block {
                                 return;
                             }
                             await ChatController.getChats().then((response) => {
-                                Store.set('isLoading', false);
+                                this.setProps({
+                                    isLoading: true,
+                                })
                                 updateChatList(response, this);
                                 this.children.InputNew.props.value = '';
                             })
@@ -106,7 +113,12 @@ export class ChatPage extends Block {
             },
         });
 
+        Store.set('isLoading', true)
         ChatController.getChats().then((response: Response) => {
+            this.setProps({
+                isLoading: false,
+            })
+            Store.set('isLoading', false)
             if (response.status !== 200) {
                 const resp = JSON.parse(response.response);
                 alert(`${ response.status }: ${ resp.reason }`);

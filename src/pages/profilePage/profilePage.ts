@@ -9,7 +9,6 @@ import AuthController from '../../controller/AuthController';
 
 interface ProfilePageProps extends Props {
     onRouteEditPassword: () => void;
-    onRouteShowProfile: () => void;
 }
 
 class ProfilePage extends Block {
