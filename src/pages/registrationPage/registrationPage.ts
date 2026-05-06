@@ -8,7 +8,7 @@ import { isFormValid } from '../../helpers/form'
 import AuthApi, { ISignUpRequestData } from '../../api/AuthApi';
 import AuthController from '../../controller/AuthController';
 import Router from '../../services/Router';
-import Store, { Indexed } from '../../services/Store';
+import Store, { IState } from '../../services/Store';
 import connect from '../../services/connectStore';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 

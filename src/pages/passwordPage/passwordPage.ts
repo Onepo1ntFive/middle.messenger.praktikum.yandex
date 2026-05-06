@@ -3,7 +3,7 @@ import template from './passwordPage.hbs?raw';
 import { Avatar, Button, Input } from '../../components';
 import { isFormValid } from '../../helpers/form';
 import connect from '../../services/connectStore';
-import Store, { Indexed, TSettings, TUserDetails } from '../../services/Store';
+import Store, { IState, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 import { IEvent } from '../../consts/consts';
@@ -72,7 +72,7 @@ class PasswordPage extends Block {
                             Store.set('isLoading', false);
                             if (response.status !== 200) {
                                 const resp = JSON.parse(response.response)
-                                alert(`${response.status}: ${resp.reason}`);
+                                alert(`${ response.status }: ${ resp.reason }`);
                                 return;
                             }
                             oldPasswordInput.value = '';

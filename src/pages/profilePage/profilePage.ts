@@ -3,7 +3,7 @@ import template from './profilePage.hbs?raw';
 import { Avatar, Button, Input, Link } from '../../components';
 import { isFormValid } from '../../helpers/form';
 import connect from '../../services/connectStore';
-import Store, { Indexed, TSettings, TUserDetails } from '../../services/Store';
+import Store, { IState, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import AuthController from '../../controller/AuthController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';

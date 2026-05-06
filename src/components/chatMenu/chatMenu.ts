@@ -1,6 +1,6 @@
 import Block, { type Props } from '../../services/Block';
 import template from './chatMenu.hbs?raw';
-import Store, { Indexed, TChatDetails, TCurrentChat } from '../../services/Store';
+import Store, { IState, TChatDetails, TCurrentChat } from '../../services/Store';
 import connect from '../../services/connectStore';
 import { Button } from '../button';
 import ChatController from '../../controller/ChatController';

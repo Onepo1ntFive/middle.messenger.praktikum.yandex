@@ -3,7 +3,7 @@ import '../../components/loader/index.sass';
 import Block, { Props } from '../../services/Block';
 import template from './settingsPage.hbs?raw';
 import connect from '../../services/connectStore';
-import { Indexed, TSettings, TUserDetails } from '../../services/Store';
+import { IState, TSettings, TUserDetails } from '../../services/Store';
 import { ProfilePage } from '../profilePage';
 import { PasswordPage } from '../passwordPage';
 import { Button } from '../../components';

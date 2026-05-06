@@ -1,6 +1,6 @@
 import Block, { type Props } from '../../services/Block';
 import template from './chatMessage.hbs?raw';
-import { Indexed, TUserDetails } from '../../services/Store';
+import { IState, TUserDetails } from '../../services/Store';
 import connect from '../../services/connectStore';
 
 interface ChatMessageProps extends Props {
