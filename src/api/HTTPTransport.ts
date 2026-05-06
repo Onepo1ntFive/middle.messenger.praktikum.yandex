@@ -14,6 +14,17 @@ type Options = {
     timeout?: number;
 };
 
+export interface IResponse<T> {
+    data: T;
+    status: number;
+    response: string;
+    responseText: string;
+}
+
+export interface IResponseAdd {
+    [key: string]: unknown,
+}
+
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
 type HTTPMethod = (
@@ -66,7 +77,7 @@ export default class HTTPTransport {
 
             const requestUrl =
                 isGet && data
-                    ? `${ BASE_URL }${ url }${ queryStringify(data as Record<string, string | number | boolean>)}`
+                    ? `${ BASE_URL }${ url }${ queryStringify(data as Record<string, string | number | boolean>) }`
                     : `${ BASE_URL }${ url }`;
             xhr.open(method, requestUrl, true);
 

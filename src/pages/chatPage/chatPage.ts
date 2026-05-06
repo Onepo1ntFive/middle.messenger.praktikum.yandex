@@ -5,7 +5,7 @@ import template from './chatPage.hbs?raw';
 import { isFormValid } from '../../helpers/form';
 import Router from '../../services/Router';
 import { Routes, WS_BASE_URL } from '../../consts/consts';
-import Store, { Indexed, TChatDetails, TMessage, TUserDetails } from '../../services/Store';
+import Store, { Indexed, IState, TChatDetails, TCurrentChat, TMessage, TUserDetails } from '../../services/Store';
 import connect from '../../services/connectStore';
 import ChatController from '../../controller/ChatController';
 import { ChatList } from '../../components/chatList';
@@ -13,12 +13,21 @@ import { ChatMenu } from '../../components/chatMenu';
 import deepArrayMerge from '../../helpers/deepArrayMerge';
 import { ChatMessage } from '../../components/chatMessage';
 import parseMessageTime from '../../helpers/parseMessageTime';
+import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 
 interface ChatPageProps extends Props {
     ChatsList: Block;
     chatItems: TChatDetails[];
-    currentChat: TChatDetails;
-    chatMessages: TMessage[],
+    currentChat: TCurrentChat;
+    chatMessages: TMessage[];
+
+    [key: string]: unknown;
+}
+
+interface IEvent extends EventTarget {
+    form: HTMLFormElement;
+
+    [key: string]: unknown;
 }
 
 export class ChatPage extends Block {
@@ -37,7 +46,8 @@ export class ChatPage extends Block {
                             currentChatId: state.settings.currentChatId,
                         }
                     })
-                    for (const chatItem of this.children.ChatsList.children.chatItems as Block[]) {
+                    const chatList = this.children.ChatsList as Block[];
+                    for (const chatItem of chatList.children.chatItems) {
                         chatItem.setProps({
                             active: chatItem.props.id === state.currentChat.id
                         })
@@ -57,9 +67,12 @@ export class ChatPage extends Block {
                 id: 'search',
                 class: 'input--search',
                 events: {
-                    submit: (event) => {
-                        const form = event.target?.form as HTMLFormElement;
-                        isFormValid(form, [this.children.InputSearch as Input])
+                    submit: (event: Event) => {
+                        if (event.target) {
+                            const eventTarget = event.target as IEvent;
+                            const form = eventTarget.form;
+                            isFormValid(form, [this.children.InputSearch as Input])
+                        }
                     }
                 }
             }),
@@ -86,14 +99,14 @@ export class ChatPage extends Block {
                         const InputNew = this.children.InputNew as Input;
                         const InputNewProps = InputNew.getProps();
                         console.log(InputNewProps)
-                        ChatController.createChat({title: InputNewProps.value as string}).then((response) => {
+                        ChatController.createChat({title: InputNewProps.value as string}).then((response: IResponse<IResponseAdd>) => {
                             console.log('then')
                             if (response.status !== 200) {
                                 const resp = JSON.parse(response.response)
                                 alert(`${ response.status }: ${ resp.reason }`);
                                 return;
                             }
-                            ChatController.getChats().then((response) => {
+                            ChatController.getChats().then((response: IResponse<IResponseAdd>) => {
                                 this.setProps({
                                     isLoading: false,
                                 })
@@ -132,7 +145,7 @@ export class ChatPage extends Block {
         });
 
         Store.set('isLoading', true)
-        ChatController.getChats().then(async (response: Response) => {
+        ChatController.getChats().then(async (response: IResponse<IResponseAdd>) => {
             this.setProps({
                 isLoading: false,
             })
@@ -145,7 +158,7 @@ export class ChatPage extends Block {
             if (response.status === 200) {
                 const resp = JSON.parse(response.response);
                 for (const respElement of resp) {
-                    await ChatController.getChatToken(respElement.id).then((tokenResponse: Response) => {
+                    await ChatController.getChatToken(respElement.id).then((tokenResponse: IResponse<IResponseAdd>) => {
                         if (tokenResponse.status !== 200) {
                             const resp = JSON.parse(tokenResponse.response);
                             alert(`${ tokenResponse.status }: ${ resp.reason }`);
@@ -163,12 +176,15 @@ export class ChatPage extends Block {
     }
 
     private submitMessage(event: Event) {
-        this.socket?.send(
-            JSON.stringify({
-                content: event.target.form[0].value,
-                type: 'message',
-            })
-        );
+        const eventTarget = event.target as HTMLInputElement;
+        if (eventTarget.form) {
+            this.socket?.send(
+                JSON.stringify({
+                    content: eventTarget.form[0]?.value,
+                    type: 'message',
+                })
+            );
+        }
     }
 
     private getOldMessages(formId: number) {
@@ -182,16 +198,17 @@ export class ChatPage extends Block {
 
     private updateChatMessages() {
         console.log('updateChatMessages')
-        const state = Store.getState();
-        if (this.props.currentChat && this.props.currentChat.id) {
-            const messages = this.props.currentChat.messages?.map((props: Props) => {
+        const state: IState = Store.getState();
+        const currentChat = this.props.currentChat as TCurrentChat;
+        if (currentChat && currentChat.id) {
+            const messages = currentChat.messages?.map((props: Props) => {
                     const date = parseMessageTime(props.time as string);
                     return new ChatMessage({
                         ...props,
                         message_time: date ? date.time : '',
                         message_date: date ? date.date : '',
-                        is_me: state.user.id === props.user_id,
-                        type_info: props.type === "user connected",
+                        is_me: state.user?.id === props.user_id,
+                        type_info: props.type === 'user connected',
                     })
                 }
             );
@@ -203,9 +220,9 @@ export class ChatPage extends Block {
     }
 
     private initWebSocket() {
-        const state = Store.getState();
+        const state: IState = Store.getState();
         this.socket = new WebSocket(
-            `${ WS_BASE_URL }${ state.user.id }/${ state.currentChat.id }/${ state.currentChat.token }`
+            `${ WS_BASE_URL }${ state.user?.id }/${ state.currentChat.id }/${ state.currentChat.token }`
         );
 
         this.socket.addEventListener('open', () => {
@@ -215,7 +232,7 @@ export class ChatPage extends Block {
 
         this.socket.addEventListener('message', (event) => {
             const mess: TMessage[] | TMessage = JSON.parse(event.data);
-            const props: ChatPageProps = this.props
+            const props: ChatPageProps = this.props;
             if (Array.isArray(mess)) {
                 const messages = deepArrayMerge(props.currentChat.messages.reverse(), mess);
                 this.setProps({
@@ -248,19 +265,12 @@ export class ChatPage extends Block {
         });
     }
 
-    protected componentDidUpdate(): boolean {
-        // if (this.socket === undefined && this.props.currentChat?.id) {
-        //     this.initWebSocket();
-        // }
-        return true
-    }
-
     override render() {
         return template;
     }
 }
 
-function updateChatList(chats: TChatDetails[], block: Block) {
+function updateChatList(chats: Array<TChatDetails>, block: Block) {
     const chatList = block.children.ChatsList as Block;
     chatList.setProps({
         chatItems: chats,
@@ -269,9 +279,9 @@ function updateChatList(chats: TChatDetails[], block: Block) {
 }
 
 function mapUserToProps(state: Indexed): {
-    user: TUserDetails
-    chats: TChatDetails[]
-    currentChat: TChatDetails
+    user: TUserDetails | unknown,
+    chats: TChatDetails[] | unknown,
+    currentChat: TChatDetails | unknown,
 } {
     return {
         user: state.user,

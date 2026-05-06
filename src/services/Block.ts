@@ -25,7 +25,7 @@ export default class Block {
 
     protected eventBus: () => EventBus;
 
-    protected children: Record<string, Block | Block[]>
+    children: Record<string, Block | Block[]>
 
     constructor(propsAndChildren: Props) {
         const eventBus = new EventBus();

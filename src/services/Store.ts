@@ -24,6 +24,12 @@ export type TProfileDetails = {
     email: string,
     phone: string
 };
+export type TCurrentChat = {
+    id: number | null,
+    chatUsers: Array<Omit<TUserDetails, 'phone' | 'email'> & { role: string }>,
+    messages: Array<TMessage>,
+    token: string | null,
+};
 
 export type TChatDetails = {
     id: number,
@@ -100,7 +106,7 @@ class Store extends EventBus {
         return this;
     }
 
-    public getState(): Indexed {
+    public getState(): IState {
         return this.state;
     }
 

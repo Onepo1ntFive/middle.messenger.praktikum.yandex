@@ -10,6 +10,7 @@ import AuthController from '../../controller/AuthController';
 import Router from '../../services/Router';
 import Store, { Indexed } from '../../services/Store';
 import connect from '../../services/connectStore';
+import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 
 interface LoginPageProps extends Props {
     [key: string]: unknown;
@@ -53,11 +54,12 @@ class LoginPage extends Block {
                     type: 'submit',
                 }),
                 events: {
-                    submit: (event) => {
+                    submit: (event: Event) => {
                         Store.set('isLoading', true);
-                        const form = event.target?.form as HTMLFormElement;
-                        if (isFormValid(form, inputs)) {
-                            const form = event.target as HTMLFormElement;
+                        const eventTarget = event.target as HTMLInputElement;
+                        const form = eventTarget.form;
+                        if (isFormValid(form as HTMLFormElement, inputs)) {
+                            const form = eventTarget;
                             const formData: ISignInRequestData = {
                                 login: '',
                                 password: '',
@@ -69,13 +71,13 @@ class LoginPage extends Block {
 
                                 }
                             }
-                            AuthController.signIn(formData).then((response) => {
+                            AuthController.signIn(formData).then((response: IResponse<IResponseAdd>) => {
                                 if (response.status !== 200) {
                                     const resp = JSON.parse(response.response)
                                     alert(`${ response.status }: ${ resp.reason }`);
                                     return;
                                 }
-                                AuthController.getUser().then((response) => {
+                                AuthController.getUser().then((response: IResponse<IResponseAdd>) => {
                                     Store.set('isLoading', false);
                                     if (response.status !== 200) {
                                         const resp = JSON.parse(response.response)
