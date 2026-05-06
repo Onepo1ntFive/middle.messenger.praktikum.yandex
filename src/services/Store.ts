@@ -85,6 +85,7 @@ export interface IState {
     settings: TSettings,
     searchResults: TUserDetails[],
     websocket: WebSocket | null,
+    [key: string]: unknown,
 }
 
 export enum StoreEvents {
