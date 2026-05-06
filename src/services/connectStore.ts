@@ -1,8 +1,8 @@
-import Store, { Indexed, StoreEvents } from './Store';
+import Store, { Indexed, IState, StoreEvents } from './Store';
 import isEqual from '../helpers/isEqual';
 import Block, { Props } from './Block';
 
-function connect(mapStateToProps: (state: Indexed) => Indexed) {
+function connect(mapStateToProps: (state: IState) => Indexed) {
     return function (Component: typeof Block) {
         return class extends Component {
             constructor(props: Props) {
