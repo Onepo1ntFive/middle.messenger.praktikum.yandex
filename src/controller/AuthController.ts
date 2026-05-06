@@ -18,7 +18,7 @@ class AuthController extends Controller {
     public logout = async () => {
         try {
             this.store.set('isLoading', true);
-            const response = await AuthApi.logout();
+            const response = await AuthApi.logout() as Response;
             this.store.set('isLoading', false);
             if (response && response.status === 200) {
                 this.store.set('isAuthenticated', false);
