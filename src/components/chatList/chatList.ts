@@ -4,7 +4,6 @@ import Store, { Indexed, TChatDetails, TUserDetails } from '../../services/Store
 import connect from '../../services/connectStore';
 import { ChatListItem } from '../chatListItem';
 import isEqualArray from '../../helpers/isEqualArray';
-import { TChatListItem } from '../chatListItem/chatListItem';
 
 interface ChatListProps extends Props {
     chatItems: Array<TChatDetails>

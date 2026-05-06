@@ -155,5 +155,3 @@ function mapUserToProps(state: Indexed): {
 }
 
 export default connect(mapUserToProps)(ChatMenu)
-
-export type TChatListItem = typeof ChatMenu;
