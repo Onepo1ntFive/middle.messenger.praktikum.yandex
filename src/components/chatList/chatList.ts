@@ -60,9 +60,9 @@ class ChatList extends Block {
 }
 
 function mapUserToProps(state: Indexed): {
-    user: TUserDetails,
-    chats: TChatDetails[],
-    isLoading: boolean,
+    user: TUserDetails | unknown,
+    chats: TChatDetails[] | unknown,
+    isLoading: boolean | unknown,
 } {
     return {
         user: state.user,

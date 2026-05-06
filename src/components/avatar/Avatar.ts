@@ -4,6 +4,7 @@ import template from './avatar.hbs?raw';
 import connect from '../../services/connectStore';
 import Store, { Indexed, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
+import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 
 interface AvatarProps extends Props {
     avatarSrc?: string | null,
@@ -18,7 +19,7 @@ class Avatar extends Block {
                     const eventTarget = event.target as HTMLFormElement;
                     const formData = new FormData()
                     formData.append('avatar', eventTarget.files[0])
-                    SettingsController.changeUserAvatar(formData).then((response: Response) => {
+                    SettingsController.changeUserAvatar(formData).then((response: IResponse<IResponseAdd>) => {
                         if (response && response.status === 200) {
                             const resp = JSON.parse(response.response)
                             Store.set('user.avatar', resp.avatar)
@@ -38,8 +39,8 @@ class Avatar extends Block {
 }
 
 function mapUserToProps(state: Indexed): {
-    user: TUserDetails,
-    isLoading: boolean,
+    user: TUserDetails | unknown,
+    isLoading: boolean | unknown,
 } {
     return {
         user: state.user,

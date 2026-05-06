@@ -36,8 +36,8 @@ class ChatListItem extends Block {
 }
 
 function mapUserToProps(state: Indexed): {
-    currentChat: TChatDetails,
-    settings: TSettings
+    currentChat: TChatDetails | unknown,
+    settings: TSettings | unknown,
 } {
     return {
         currentChat: state.currentChat,

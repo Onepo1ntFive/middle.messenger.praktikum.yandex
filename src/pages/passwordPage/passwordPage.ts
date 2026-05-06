@@ -90,9 +90,9 @@ class PasswordPage extends Block {
 }
 
 function mapUserToProps(state: Indexed): {
-    user: TUserDetails,
-    settings: TSettings,
-    isLoading: boolean,
+    user: TUserDetails | unknown,
+    settings: TSettings | unknown,
+    isLoading: boolean | unknown,
 } {
     return {
         user: state.user,

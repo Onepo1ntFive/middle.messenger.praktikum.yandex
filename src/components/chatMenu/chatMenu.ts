@@ -147,7 +147,7 @@ class ChatMenu extends Block {
 }
 
 function mapUserToProps(state: Indexed): {
-    currentChat: TChatDetails,
+    currentChat: TChatDetails | unknown,
 } {
     return {
         currentChat: state.currentChat,

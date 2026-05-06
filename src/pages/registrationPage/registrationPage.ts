@@ -140,7 +140,7 @@ class RegistrationPage extends Block {
 }
 
 function mapUserToProps(state: Indexed): {
-    isLoading: boolean,
+    isLoading: boolean | unknown,
 } {
     return {
         isLoading: state.isLoading
