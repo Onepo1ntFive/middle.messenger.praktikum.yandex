@@ -9,8 +9,8 @@ type TIsEqualItem = Array<unknown> | TPlainObject | string
 function deepArrayMerge(target: Array<unknown>, source: Array<unknown>) {
     const result: Array<unknown> = [...target];
 
-    source.forEach(item => {
-        if (!result.some(existing => isEqualArr(existing, item))) {
+    source.forEach((item: TIsEqualItem) => {
+        if (!result.some(existing => isEqualArr(existing as Array<unknown>, item))) {
             result.push(item);
         }
     });
@@ -18,7 +18,7 @@ function deepArrayMerge(target: Array<unknown>, source: Array<unknown>) {
     return result;
 }
 
-function isEqualArr(a: TIsEqualItem, b: TIsEqualItem): boolean {
+function isEqualArr(a: TIsEqualItem, b: TIsEqualItem) {
     if (a === b) return true;
     if (typeof a !== 'object' || typeof b !== 'object') return false;
     if (a === null || b === null) return false;
@@ -29,9 +29,7 @@ function isEqualArr(a: TIsEqualItem, b: TIsEqualItem): boolean {
     if (keysA.length !== keysB.length) return false;
 
     if (isPlainObject(a) && isPlainObject(b)) {
-        return keysA.every(key => {
-            return a[`${ key }`] === b[`${ key }`]
-        });
+        return keysA.every(key => a[`${ key }`] === b[`${ key }`]);
     }
 }
 
