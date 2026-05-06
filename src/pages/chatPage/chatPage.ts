@@ -170,11 +170,13 @@ export class ChatPage extends Block {
     }
 
     private submitMessage(event: Event) {
-        const eventTarget = event.target as HTMLInputElement;
+        const eventTarget = event.target as IEvent;
+        const form = eventTarget.form;
+        const formInput = form[0] as HTMLFormElement
         if (eventTarget.form) {
             this.socket?.send(
                 JSON.stringify({
-                    content: eventTarget.form[0]?.value,
+                    content: formInput.value,
                     type: 'message',
                 })
             );
@@ -226,17 +228,17 @@ export class ChatPage extends Block {
 
         this.socket.addEventListener('message', (event) => {
             const mess: TMessage[] | TMessage = JSON.parse(event.data);
-            const props: ChatPageProps = this.props;
+            const props = this.props as ChatPageProps;
             if (Array.isArray(mess)) {
                 const messages = deepArrayMerge(props.currentChat.messages.reverse(), mess);
                 this.setProps({
                     currentChat: {
                         ...props.currentChat,
-                        messages: messages.sort((a, b) => (new Date(a.time)).getTime() - (new Date(b.time)).getTime())
+                        messages: messages.sort((a: TMessage, b: TMessage) => (new Date(a.time)).getTime() - (new Date(b.time)).getTime())
                     }
                 })
             } else {
-                const messages: TMessage[] = deepArrayMerge(props.currentChat.messages.reverse(), [mess]);
+                const messages = deepArrayMerge(props.currentChat.messages.reverse(), [mess]) as TMessage[];
                 Store.set('currentChat.messages', messages);
                 this.setProps({
                     currentChat: {

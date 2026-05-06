@@ -6,6 +6,8 @@ import connect from '../../services/connectStore';
 import Store, { Indexed, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import AuthController from '../../controller/AuthController';
+import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
+import { IEvent } from '../../consts/consts';
 
 interface ProfilePageProps extends Props {
     onRouteEditPassword: () => void;
@@ -131,18 +133,19 @@ class ProfilePage extends Block {
                 },
                 submit: (event) => {
                     event.preventDefault();
-                    const form = event.target?.form as HTMLFormElement;
+                    const eventTarget = event.target as IEvent;
+                    const form = eventTarget.form;
                     if (isFormValid(form, profileInputs)) {
                         const state = Store.getState();
                         Store.set('isLoading', true);
                         SettingsController.saveUserData({
-                            first_name: state.user.first_name as string,
-                            second_name: state.user.second_name as string,
-                            display_name: state.user.display_name as string,
-                            login: state.user.login as string,
-                            email: state.user.email as string,
-                            phone: state.user.phone as string,
-                        }).then((response) => {
+                            first_name: state.user?.first_name as string,
+                            second_name: state.user?.second_name as string,
+                            display_name: state.user?.display_name as string,
+                            login: state.user?.login as string,
+                            email: state.user?.email as string,
+                            phone: state.user?.phone as string,
+                        }).then((response: IResponse<IResponseAdd>) => {
                             Store.set('isLoading', false);
                             if (response) {
                                 const resp = JSON.parse(response.response)

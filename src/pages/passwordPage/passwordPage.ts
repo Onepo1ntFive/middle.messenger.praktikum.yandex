@@ -5,6 +5,8 @@ import { isFormValid } from '../../helpers/form';
 import connect from '../../services/connectStore';
 import Store, { Indexed, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
+import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
+import { IEvent } from '../../consts/consts';
 
 interface PasswordPageProps extends Props {
     onRouteShowProfile: () => void;
@@ -56,7 +58,8 @@ class PasswordPage extends Block {
             events: {
                 submit: (event) => {
                     event.preventDefault();
-                    const form = event.target?.form as HTMLFormElement;
+                    const eventTarget = event.target as IEvent;
+                    const form = eventTarget.form;
                     if (isFormValid(form, inputs)) {
                         Store.set('isLoading', true);
                         const oldPasswordInput = document.getElementById('oldPassword') as HTMLFormElement;
@@ -65,7 +68,7 @@ class PasswordPage extends Block {
                         SettingsController.saveUserPassword({
                             oldPassword: oldPasswordInput.value,
                             newPassword: newPasswordInput.value,
-                        }).then((response) => {
+                        }).then((response: IResponse<IResponseAdd>) => {
                             Store.set('isLoading', false);
                             if (response.status !== 200) {
                                 const resp = JSON.parse(response.response)
