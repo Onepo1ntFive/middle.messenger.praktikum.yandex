@@ -2,7 +2,7 @@ import './index.sass'
 import Block, { type Props } from '../../services/Block';
 import template from './avatar.hbs?raw';
 import connect from '../../services/connectStore';
-import Store, { Indexed, TUserDetails } from '../../services/Store';
+import Store, { IState, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 
@@ -24,7 +24,7 @@ class Avatar extends Block {
                             const resp = JSON.parse(response.response)
                             Store.set('user.avatar', resp.avatar)
                             this.setProps({
-                                avatarSrc: resp.avatar ? `https://ya-praktikum.tech/api/v2/resources${resp.avatar}` : '',
+                                avatarSrc: resp.avatar ? `https://ya-praktikum.tech/api/v2/resources${ resp.avatar }` : '',
                             })
                         }
                     })

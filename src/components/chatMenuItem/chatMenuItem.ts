@@ -1,6 +1,6 @@
 import Block, { type Props } from '../../services/Block';
 import template from './chatMenuItem.hbs?raw';
-import { Indexed, TChatDetails, TUserDetails } from '../../services/Store';
+import { IState, TChatDetails, TUserDetails } from '../../services/Store';
 import connect from '../../services/connectStore';
 
 interface chatMenuItemProps extends Props {
