@@ -29,11 +29,9 @@ class ChatPage extends Block {
                 chatItems: [],
                 onCurrentChatUpdate: () => {
                     const state = Store.getState();
+                    console.log(state.currentChat)
                     this.setProps({
                         currentChat: state.currentChat,
-                        settings: {
-                            currentChatId: state.settings.currentChatId,
-                        }
                     })
                     this.initWebSocket();
                 }

@@ -19,6 +19,8 @@ function isEqual(a: TIsEqualItem, b: TIsEqualItem): boolean {
 
     const keysA = Object.keys(a);
     const keysB = Object.keys(b);
+    
+    console.log(keysA, keysB)
 
     if (keysA.length !== keysB.length) return false;
 

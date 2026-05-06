@@ -1,6 +1,6 @@
 import Block, { type Props } from '../../services/Block';
 import template from './chatListItem.hbs?raw';
-import Store, { Indexed, TChatDetails, TSettings } from '../../services/Store';
+import Store, { Indexed, TCurrentChat, TSettings } from '../../services/Store';
 import connect from '../../services/connectStore';
 
 interface ChatListItemProps extends Props {
@@ -36,7 +36,7 @@ class ChatListItem extends Block {
 }
 
 function mapUserToProps(state: Indexed): {
-    currentChat: TChatDetails | unknown,
+    currentChat: TCurrentChat | unknown,
     settings: TSettings | unknown,
 } {
     return {

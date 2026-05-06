@@ -91,7 +91,7 @@ export enum StoreEvents {
     STORE_UPD = 'updated',
 }
 
-class Store extends EventBus {
+class Store extends EventBus<string> {
     private state: Indexed = {};
     static __instance: Store | null = null;
 
