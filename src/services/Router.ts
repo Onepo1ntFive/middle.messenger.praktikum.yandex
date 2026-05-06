@@ -6,11 +6,7 @@ import type { TRegistrationPage } from '../pages/registrationPage/registrationPa
 import Block from './Block';
 import Store from './Store';
 
-export type TPageBlock = | TChatPage |
-    TErrorPage |
-    TLoginPage |
-    TSettingsPage |
-    TRegistrationPage;
+export type TPageBlock = | TErrorPage | TChatPage | TLoginPage | TSettingsPage | TRegistrationPage;
 
 interface RouteQuery {
     rootQuery: string,
@@ -31,9 +27,10 @@ export class Route {
 
     render() {
         if (!this._block) {
+            const state = Store.getState();
             this._block = new this._blockClass({
                 ...this._props,
-                ...Store.getState()
+                ...state
             });
         }
         const rootEl = document.querySelector(this._props.rootQuery,);

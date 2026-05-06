@@ -16,15 +16,10 @@ import parseMessageTime from '../../helpers/parseMessageTime';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 
 interface ChatPageProps extends Props {
-    ChatsList: Block;
-    chatItems: TChatDetails[];
-    currentChat: TCurrentChat;
-    chatMessages: TMessage[];
-
     [key: string]: unknown;
 }
 
-export class ChatPage extends Block {
+class ChatPage extends Block {
     socket: WebSocket | undefined;
 
     constructor(props: ChatPageProps) {
@@ -40,12 +35,6 @@ export class ChatPage extends Block {
                             currentChatId: state.settings.currentChatId,
                         }
                     })
-                    const chatList = this.children.ChatsList as Block[];
-                    for (const chatItem of chatList.children.chatItems) {
-                        chatItem.setProps({
-                            active: chatItem.props.id === state.currentChat.id
-                        })
-                    }
                     this.initWebSocket();
                 }
             }),
@@ -92,20 +81,31 @@ export class ChatPage extends Block {
                         console.log(this.children)
                         const InputNew = this.children.InputNew as Input;
                         const InputNewProps = InputNew.getProps();
-                        console.log(InputNewProps)
                         ChatController.createChat({title: InputNewProps.value as string}).then((response: IResponse<IResponseAdd>) => {
-                            console.log('then')
                             if (response.status !== 200) {
                                 const resp = JSON.parse(response.response)
                                 alert(`${ response.status }: ${ resp.reason }`);
                                 return;
                             }
-                            ChatController.getChats().then((response: IResponse<IResponseAdd>) => {
+                            ChatController.getChats().then(async (response: IResponse<IResponseAdd>) => {
                                 this.setProps({
                                     isLoading: false,
                                 })
                                 Store.set('isLoading', false)
-                                const resp = JSON.parse(response.response)
+                                const resp = JSON.parse(response.response);
+                                for (const respElement of resp) {
+                                    await ChatController.getChatToken(respElement.id).then((tokenResponse: IResponse<IResponseAdd>) => {
+                                        if (tokenResponse.status !== 200) {
+                                            const resp = JSON.parse(tokenResponse.response);
+                                            alert(`${ tokenResponse.status }: ${ resp.reason }`);
+                                            return;
+                                        }
+                                        if (tokenResponse.status === 200) {
+                                            const tokenResp = JSON.parse(tokenResponse.response);
+                                            respElement.token = tokenResp.token
+                                        }
+                                    })
+                                }
                                 updateChatList(resp, this);
                             })
                             InputNew.setProps({
@@ -193,7 +193,6 @@ export class ChatPage extends Block {
     }
 
     private updateChatMessages() {
-        console.log('updateChatMessages')
         const state: IState = Store.getState();
         const currentChat = this.props.currentChat as TCurrentChat;
         if (currentChat && currentChat.id) {
@@ -229,20 +228,21 @@ export class ChatPage extends Block {
         this.socket.addEventListener('message', (event) => {
             const mess: TMessage[] | TMessage = JSON.parse(event.data);
             const props = this.props as ChatPageProps;
+            const currentChat = props.currentChat as TCurrentChat;
             if (Array.isArray(mess)) {
-                const messages = deepArrayMerge(props.currentChat.messages.reverse(), mess);
+                const messages = deepArrayMerge(currentChat.messages.reverse(), mess);
                 this.setProps({
                     currentChat: {
-                        ...props.currentChat,
+                        ...currentChat,
                         messages: messages.sort((a: TMessage, b: TMessage) => (new Date(a.time)).getTime() - (new Date(b.time)).getTime())
                     }
                 })
             } else {
-                const messages = deepArrayMerge(props.currentChat.messages.reverse(), [mess]) as TMessage[];
+                const messages = deepArrayMerge(currentChat.messages.reverse(), [mess]) as TMessage[];
                 Store.set('currentChat.messages', messages);
                 this.setProps({
                     currentChat: {
-                        ...props.currentChat,
+                        ...currentChat,
                         messages: messages.sort((a, b) => (new Date(a.time)).getTime() - (new Date(b.time)).getTime())
                     }
                 })
@@ -268,10 +268,10 @@ export class ChatPage extends Block {
 
 function updateChatList(chats: Array<TChatDetails>, block: Block) {
     const chatList = block.children.ChatsList as Block;
+    Store.set('chats', chats)
     chatList.setProps({
         chatItems: chats,
     })
-    Store.set('chats', chats)
 }
 
 function mapUserToProps(state: Indexed): {
