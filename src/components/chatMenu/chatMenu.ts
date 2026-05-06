@@ -1,6 +1,6 @@
 import Block, { type Props } from '../../services/Block';
 import template from './chatMenu.hbs?raw';
-import Store, { Indexed, TChatDetails } from '../../services/Store';
+import Store, { Indexed, TChatDetails, TCurrentChat } from '../../services/Store';
 import connect from '../../services/connectStore';
 import { Button } from '../button';
 import ChatController from '../../controller/ChatController';
@@ -8,9 +8,10 @@ import { Input } from '../input';
 import { TChatMenuItem } from '../chatMenuItem/chatMenuItem';
 import isEqualArray from '../../helpers/isEqualArray';
 import { ChatMenuItem } from '../chatMenuItem';
+import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 
 interface ChatListItemProps extends Props {
-    chatUsers: TChatMenuItem[];
+    chatUsers: Array<TChatMenuItem>;
     menuActive: boolean,
 
     [key: string]: unknown;
@@ -27,15 +28,15 @@ class ChatMenu extends Block {
                 events: {
                     click: () => {
                         const state = Store.getState();
-                        const input = this.children.AddUserInput;
+                        const input = this.children.AddUserInput as Input;
                         const userId = Number(input.props.value);
                         if (state.currentChat) {
                             ChatController.addChatUser({
                                 users: [
                                     userId,
                                 ],
-                                chatId: state.currentChat.id,
-                            }).then((response) => {
+                                chatId: state.currentChat.id as number,
+                            }).then((response: IResponse<IResponseAdd>) => {
                                 if (response.status !== 200) {
                                     alert(`${ response.status }`);
                                     return;
@@ -79,7 +80,8 @@ class ChatMenu extends Block {
 
     private async getChatUsers() {
         const state = Store.getState();
-        await ChatController.getChatUsers(state.currentChat.id).then((response: Response) => {
+        const currentChat = state.currentChat as TCurrentChat
+        await ChatController.getChatUsers(currentChat.id as number).then((response: IResponse<IResponseAdd>) => {
             if (response.status !== 200) {
                 alert(`${ response.status }`);
                 return;
@@ -104,8 +106,8 @@ class ChatMenu extends Block {
                                 users: [
                                     userId,
                                 ],
-                                chatId: state.currentChat.id,
-                            }).then(response => {
+                                chatId: state.currentChat.id as number,
+                            }).then((response: IResponse<IResponseAdd>) => {
                                 if (response.status !== 200) {
                                     const resp = JSON.parse(response.response)
                                     alert(`${ response.status }: ${ resp.reason }`);
@@ -129,7 +131,7 @@ class ChatMenu extends Block {
 
     protected componentDidUpdate(): boolean {
         const state = Store.getState()
-        const props: ChatListItemProps = this.props;
+        const props = this.props as ChatListItemProps;
         if (isEqualArray(state.currentChat.chatUsers, props.chatUsers)) {
             this.updateChatMenuItems();
         }

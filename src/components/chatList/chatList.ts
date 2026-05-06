@@ -43,7 +43,7 @@ class ChatList extends Block {
 
     protected componentDidUpdate(): boolean {
         const state = Store.getState()
-        const props: ChatListProps = this.props
+        const props = this.props as ChatListProps;
         if (isEqualArray(state.chats, props.chats)) {
             this.updateChatItems();
         }

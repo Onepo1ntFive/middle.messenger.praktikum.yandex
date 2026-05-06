@@ -109,7 +109,7 @@ class Store extends EventBus {
     }
 
     public getState(): IState {
-        return this.state;
+        return <IState><unknown>this.state;
     }
 
     public set(path: string, value: unknown): void {

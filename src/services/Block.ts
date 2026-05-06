@@ -3,10 +3,10 @@ import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 
 export interface Props {
-    [key: string]: unknown;
-
     attr?: Record<string, string>;
     events?: Record<string, EventListener>;
+
+    [key: string]: unknown;
 }
 
 export default class Block {
@@ -20,7 +20,7 @@ export default class Block {
     protected element: HTMLElement | null = null;
     protected id: string = makeUUID();
 
-    protected props: Props;
+    props: Props;
     protected events: Props;
 
     protected eventBus: () => EventBus;
@@ -164,7 +164,7 @@ export default class Block {
 
         const fragment = this._createDocumentElement('template');
         fragment.innerHTML = Handlebars.compile(this.render())(currentProps);
-        
+
         Object.values(this.children).forEach((child) => {
             if (Array.isArray(child)) {
                 child.forEach(c => {
@@ -180,7 +180,7 @@ export default class Block {
                 }
             }
         });
-        
+
         const newElement = fragment.content.firstElementChild as HTMLElement;
         if (this.element && newElement) {
             this._removeEvents();
