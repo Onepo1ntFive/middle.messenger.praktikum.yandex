@@ -46,5 +46,3 @@ function mapUserToProps(state: Indexed): {
 }
 
 export default connect(mapUserToProps)(ChatListItem)
-
-export type TChatListItem = typeof ChatListItem;
