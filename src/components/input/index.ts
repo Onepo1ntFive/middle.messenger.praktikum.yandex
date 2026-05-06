@@ -1,7 +1,7 @@
 import './index.sass'
 import Block, { type Props } from '../../services/Block';
 import template from './input.hbs?raw';
-import { type FieldName, FormValidator } from '../../helpers/validation';
+import { type FieldName, FormValidator, validators } from '../../helpers/validation';
 
 interface InputProps extends Props {
     type?: string,
@@ -22,12 +22,19 @@ export class Input extends Block {
             events: {
                 blur: (event) => {
                     const input = event.target as HTMLInputElement;
-                    if (props.name) {
-                        const error = validator.validateField(props.name as FieldName, input.value);
+                    const fieldName = props.name as FieldName;
+                    if (props.name && validators[`${fieldName}`]) {
+                        const error = validator.validateField(fieldName, input.value);
                         this.setProps({
                             ...props,
                             value: input.value,
                             error: error,
+                        })
+                    }
+                    else {
+                        this.setProps({
+                            ...props,
+                            value: input.value,
                         })
                     }
                 },

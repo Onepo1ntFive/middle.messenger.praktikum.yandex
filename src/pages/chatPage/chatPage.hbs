@@ -8,7 +8,7 @@
                 {{{ Link }}}
             </div>
             <div class='page-chat_search'>
-                <form action='' method='get'>
+                <form>
                     {{{ InputSearch }}}
                 </form>
             </div>
@@ -37,20 +37,10 @@
 
             </header>
             <section class='page-chat_chat-list'>
-                <div class='page-chat_chat-date'>19 июня</div>
-                <div class='page-chat_chat-message'>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem commodi ea minima pariatur tempora? Earum error id ipsum, omnis quia quis sint soluta voluptates. Aliquam ducimus eaque earum enim nostrum!</p>
-                    <p>Beatae consectetur doloremque hic nostrum placeat tempore voluptates? Aspernatur assumenda blanditiis cumque, distinctio dolor esse eum explicabo fuga id modi neque nisi nobis perferendis quaerat quasi quo repellat temporibus, vel!</p>
-                    <p>Consectetur distinctio neque non, possimus provident quo quos ratione reiciendis sunt voluptatum. Aspernatur at distinctio, exercitationem hic in iste optio sit voluptatibus? Dolorum id illo nostrum odio officiis perferendis quibusdam.</p>
-                    <div class='page-chat_chat-time'>11:56</div>
-                </div>
-                <div class='page-chat_chat-message page-chat_chat-message--media'>
-                    <img src='/images/chat-media.jpg' alt='media'>
-                    <div class='page-chat_chat-time'>11:56</div>
-                </div>
-                <div class='page-chat_chat-message page-chat_chat-message--user page-chat_chat-message--read'>
-                    <p>Чо?!</p>
-                    <div class='page-chat_chat-time'>11:57</div>
+                <div>
+                    {{#each chatMessages }}
+                        {{{this}}}
+                    {{/each}}
                 </div>
             </section>
             <footer class='page-chat_chat-footer'>
@@ -62,7 +52,7 @@
                         <li><img src='/images/icon-geo.svg' alt='geo'> Локация</li>
                     </ul>
                 </div>
-                <form action='' method='get'>
+                <form>
                     <div class='page-chat_chat-input'>
                         {{{ Input }}}
                     </div>

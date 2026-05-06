@@ -117,7 +117,7 @@ class ProfilePage extends Block {
             profileData: user.display_name,
             Avatar: new Avatar({
                 ...props,
-                avatarSrc: `https://ya-praktikum.tech/api/v2/resources${ user.avatar }`
+                avatarSrc: user.avatar ? `https://ya-praktikum.tech/api/v2/resources${ user.avatar }` : '',
             }),
             inputs: profileInputs,
             events: {
@@ -131,7 +131,8 @@ class ProfilePage extends Block {
                 },
                 submit: (event) => {
                     event.preventDefault();
-                    if (isFormValid(event, profileInputs)) {
+                    const form = event.target?.form as HTMLFormElement;
+                    if (isFormValid(form, profileInputs)) {
                         const state = Store.getState();
                         Store.set('isLoading', true);
                         SettingsController.saveUserData({

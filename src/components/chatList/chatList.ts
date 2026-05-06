@@ -7,8 +7,9 @@ import isEqualArray from '../../helpers/isEqualArray';
 import { TChatListItem } from '../chatListItem/chatListItem';
 
 interface ChatListProps extends Props {
-    chatItems: TChatListItem[];
+    chatItems: Array<TChatListItem>
     onCurrentChatUpdate: void;
+
     [key: string]: unknown;
 }
 
@@ -21,19 +22,22 @@ class ChatList extends Block {
     }
 
     private updateChatItems() {
-        this.children.chatItems = this.props.chatItems?.map((props: Props) => {
-                return new ChatListItem({
-                    avatar:  `https://ya-praktikum.tech/api/v2/resources/${ props.avatar }`,
-                    created_by: props.created_by,
-                    id: props.id,
-                    last_message: props.last_message,
-                    title: props.title,
-                    unread_count: props.unread_count,
-                    active: props.active || false,
-                    onCurrentChatUpdate: this.props.onCurrentChatUpdate,
-                })
-            }
-        );
+        if (this.props.chatItems.length) {
+            this.children.chatItems = this.props.chatItems.map((props: Props) => {
+                    return new ChatListItem({
+                        avatar: props.avatar ? `https://ya-praktikum.tech/api/v2/resources/${ props.avatar }`: '',
+                        created_by: props.created_by,
+                        id: props.id,
+                        last_message: props.last_message,
+                        title: props.title,
+                        unread_count: props.unread_count,
+                        active: props.active || false,
+                        token: props.token,
+                        onCurrentChatUpdate: this.props.onCurrentChatUpdate,
+                    })
+                }
+            );
+        }
     }
 
     protected componentDidUpdate(): boolean {

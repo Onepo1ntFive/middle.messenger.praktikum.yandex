@@ -1,8 +1,8 @@
 import { Indexed } from '../services/Store';
 
-function merge(lhs: Indexed, rhs: Indexed): Indexed {
+function merge(lhs: Record<string, unknown>, rhs: Record<string, unknown>): Indexed {
     Object.keys(rhs).forEach((p) => {
-        if (!rhs.hasOwnProperty(p)) {
+        if (!Object.prototype.hasOwnProperty.call(rhs, p)) {
             return;
         }
 
@@ -13,6 +13,7 @@ function merge(lhs: Indexed, rhs: Indexed): Indexed {
                 lhs[p] = rhs[p];
             }
         } catch (e) {
+            console.log(e)
             lhs[p] = rhs[p];
         }
     });

@@ -3,9 +3,7 @@ import { Input } from '../components';
 
 const validator = new FormValidator();
 
-export function isFormValid(event: Event, inputs: Input[]) {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
+export function isFormValid(form: HTMLFormElement, inputs: Input[]) {
     const formData = new FormData(form);
     const formHasError = validator.validateForm(Object.fromEntries(formData.entries()));
     const errors = validator.getErrors();

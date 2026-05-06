@@ -97,7 +97,8 @@ class RegistrationPage extends Block {
                 events: {
                     submit: (event) => {
                         Store.set('isLoading', true);
-                        if (isFormValid(event, inputs)) {
+                        const form = event.target?.form as HTMLFormElement;
+                        if (isFormValid(form, inputs)) {
                             const form = event.target as HTMLFormElement;
                             const formData: ISignUpRequestData = {
                                 first_name: '',

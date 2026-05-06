@@ -53,6 +53,7 @@ $mainClass: '.page-chat'
             border-radius: 12px
             display: none
             position: absolute
+            z-index: 9999
             top: calc(100% + 20px)
             right: 0
             width: 220px
@@ -286,6 +287,10 @@ $mainClass: '.page-chat'
             justify-content: flex-end
             overflow-y: auto
 
+            & > div
+                height: 100%
+                overflow: auto
+
         &-date
             padding-bottom: 30px
             text-align: center
@@ -317,6 +322,13 @@ $mainClass: '.page-chat'
                             background: rgba(82 82 82 / 0.5)
                             border-radius: 20px
                             color: $colorWhite
+
+            &--info
+                background: none
+                text-align: center
+                margin-left: auto
+                margin-right: auto
+                border-radius: 12px
 
             &--user
                 padding-right: 40px

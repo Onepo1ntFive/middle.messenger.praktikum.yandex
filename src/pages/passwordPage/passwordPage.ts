@@ -50,13 +50,14 @@ class PasswordPage extends Block {
             ...buttons,
             Avatar: new Avatar({
                 ...props,
-                avatarSrc: `https://ya-praktikum.tech/api/v2/resources${ user.avatar }`
+                avatarSrc: user.avatar ? `https://ya-praktikum.tech/api/v2/resources${ user.avatar }` : '',
             }),
             inputs: inputs,
             events: {
                 submit: (event) => {
                     event.preventDefault();
-                    if (isFormValid(event, inputs)) {
+                    const form = event.target?.form as HTMLFormElement;
+                    if (isFormValid(form, inputs)) {
                         Store.set('isLoading', true);
                         const oldPasswordInput = document.getElementById('oldPassword') as HTMLFormElement;
                         const newPasswordInput = document.getElementById('newPassword') as HTMLFormElement;

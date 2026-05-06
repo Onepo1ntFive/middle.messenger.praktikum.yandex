@@ -23,7 +23,7 @@ class Avatar extends Block {
                             const resp = JSON.parse(response.response)
                             Store.set('user.avatar', resp.avatar)
                             this.setProps({
-                                avatarSrc: `https://ya-praktikum.tech/api/v2/resources${resp.avatar}`,
+                                avatarSrc: resp.avatar ? `https://ya-praktikum.tech/api/v2/resources${resp.avatar}` : '',
                             })
                         }
                     })

@@ -19,6 +19,7 @@ class ChatListItem extends Block {
                         id: props.id,
                         title: props.title,
                         avatar: props.avatar,
+                        token: props.token,
                     })
                     Store.set('settings', {
                         currentChatId: props.id,

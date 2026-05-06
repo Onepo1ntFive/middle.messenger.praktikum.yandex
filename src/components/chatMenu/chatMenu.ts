@@ -30,7 +30,6 @@ class ChatMenu extends Block {
                         const input = this.children.AddUserInput;
                         const userId = Number(input.props.value);
                         if (state.currentChat) {
-                            console.log(userId)
                             ChatController.addChatUser({
                                 users: [
                                     userId,
@@ -56,6 +55,7 @@ class ChatMenu extends Block {
                 value: '',
                 events: {
                     blur: event => {
+                        console.log('blur')
                         event.preventDefault();
                     },
                 }

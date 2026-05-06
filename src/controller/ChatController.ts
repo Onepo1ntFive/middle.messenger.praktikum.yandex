@@ -21,6 +21,10 @@ class ChatController extends Controller {
     public deleteChatUser = async (data: IChatUsers) => {
         return await ChatsApi.deleteChatUser(data);
     }
+
+    public getChatToken = async (chatId: number) => {
+        return await ChatsApi.getChatToken(chatId);
+    }
 }
 
 export default new ChatController();

@@ -31,6 +31,7 @@ export type TChatDetails = {
     avatar: string,
     unread_count: number,
     created_by: number,
+    token: string | null,
     last_message: {
         user: Omit<TUserDetails, 'id' | 'display_name'>,
         time: string,
@@ -38,7 +39,7 @@ export type TChatDetails = {
     } | null,
 };
 
-type TMessage = {
+export type TMessage = {
     chat_id?: number,
     time: string,
     type?: string,
@@ -71,6 +72,7 @@ export interface IState {
         id: number | null,
         chatUsers: Array<Omit<TUserDetails, 'phone' | 'email'> & { role: string }>,
         messages: Array<TMessage>,
+        token: string | null,
     },
     settings: TSettings,
     searchResults: TUserDetails[],
@@ -117,6 +119,7 @@ export default new Store({
         id: null,
         chatUsers: [],
         messages: [],
+        token: null,
     },
     settings: {
         showProfile: true,
