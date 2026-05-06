@@ -172,7 +172,7 @@ class ProfilePage extends Block {
     }
 }
 
-function mapUserToProps(state: Indexed): {
+function mapUserToProps(state: IState): {
     user: TUserDetails | unknown,
     settings: TSettings | unknown,
     isLoading: boolean | unknown,

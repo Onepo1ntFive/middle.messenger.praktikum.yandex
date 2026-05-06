@@ -273,7 +273,7 @@ function updateChatList(chats: Array<TChatDetails>, block: Block) {
     })
 }
 
-function mapUserToProps(state: Indexed): {
+function mapUserToProps(state: IState): {
     user: TUserDetails | unknown,
     chats: TChatDetails[] | unknown,
     currentChat: TChatDetails | unknown,

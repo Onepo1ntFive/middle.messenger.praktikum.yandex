@@ -38,7 +38,7 @@ class Avatar extends Block {
     }
 }
 
-function mapUserToProps(state: Indexed): {
+function mapUserToProps(state: IState): {
     user: TUserDetails | unknown,
     isLoading: boolean | unknown,
 } {

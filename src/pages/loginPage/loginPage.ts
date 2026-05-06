@@ -106,7 +106,7 @@ class LoginPage extends Block {
     }
 }
 
-function mapUserToProps(state: Indexed): {
+function mapUserToProps(state: IState): {
     isLoading: boolean | unknown,
 } {
     return {

@@ -19,7 +19,7 @@ class ChatMessage extends Block {
     }
 }
 
-function mapUserToProps(state: Indexed): {
+function mapUserToProps(state: IState): {
     user: TUserDetails | unknown,
 } {
     return {
