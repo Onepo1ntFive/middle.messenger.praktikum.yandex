@@ -29,7 +29,6 @@ class ChatPage extends Block {
                 chatItems: [],
                 onCurrentChatUpdate: () => {
                     const state = Store.getState();
-                    console.log(state.currentChat)
                     this.setProps({
                         currentChat: state.currentChat,
                     })
@@ -229,6 +228,7 @@ class ChatPage extends Block {
             const currentChat = props.currentChat as TCurrentChat;
             if (Array.isArray(mess)) {
                 const messages = deepArrayMerge(currentChat.messages.reverse(), mess);
+                console.log(messages)
                 this.setProps({
                     currentChat: {
                         ...currentChat,
@@ -237,6 +237,7 @@ class ChatPage extends Block {
                 })
             } else {
                 const messages = deepArrayMerge(currentChat.messages.reverse(), [mess]) as TMessage[];
+                console.log(messages)
                 Store.set('currentChat.messages', messages);
                 this.setProps({
                     currentChat: {
