@@ -1,4 +1,4 @@
-type TIsEqualItem = unknown | Record<string, unknown> | Array<unknown>
+type TIsEqualItem = unknown | Array<unknown>
 
 function deepArrayMerge(target: Array<unknown>, source: Array<unknown>) {
     const result: Array<unknown> = [...target];
