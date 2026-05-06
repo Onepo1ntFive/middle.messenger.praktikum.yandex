@@ -97,7 +97,8 @@ class ChatMenu extends Block {
 
     private updateChatMenuItems() {
         if (this.props.chatUsers) {
-            this.children.chatUsers = this.props.chatUsers?.map((props: Props) => {
+            const chatUsers = this.props.chatUsers as Array<TChatMenuItem>;
+            this.children.chatUsers = chatUsers.map((props: TChatMenuItem) => {
                     return new ChatMenuItem({
                         ...props,
                         deleteChatUser: (userId: number) => {
