@@ -92,7 +92,7 @@ export enum StoreEvents {
 }
 
 class Store extends EventBus<string> {
-    private state: IState = {};
+    private state: IState | Indexed = {};
     static __instance: Store | null = null;
 
     constructor(defaultState: IState) {
