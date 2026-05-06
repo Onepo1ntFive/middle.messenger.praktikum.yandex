@@ -4,7 +4,7 @@ import { Button, Input, Link } from '../../components';
 import template from './chatPage.hbs?raw';
 import { isFormValid } from '../../helpers/form';
 import Router from '../../services/Router';
-import { Routes, WS_BASE_URL } from '../../consts/consts';
+import { IEvent, Routes, WS_BASE_URL } from '../../consts/consts';
 import Store, { Indexed, IState, TChatDetails, TCurrentChat, TMessage, TUserDetails } from '../../services/Store';
 import connect from '../../services/connectStore';
 import ChatController from '../../controller/ChatController';
@@ -20,12 +20,6 @@ interface ChatPageProps extends Props {
     chatItems: TChatDetails[];
     currentChat: TCurrentChat;
     chatMessages: TMessage[];
-
-    [key: string]: unknown;
-}
-
-interface IEvent extends EventTarget {
-    form: HTMLFormElement;
 
     [key: string]: unknown;
 }

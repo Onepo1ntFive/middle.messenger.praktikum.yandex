@@ -3,7 +3,7 @@ import Block, { type Props } from '../../services/Block';
 import template from './loginPage.hbs?raw';
 import { Button, Form, Input, Link } from '../../components';
 import { loginFormData } from '../../demoData';
-import { Routes } from '../../consts/consts';
+import { IEvent, Routes } from '../../consts/consts';
 import { isFormValid } from '../../helpers/form';
 import { ISignInRequestData } from '../../api/AuthApi';
 import AuthController from '../../controller/AuthController';
@@ -54,12 +54,11 @@ class LoginPage extends Block {
                     type: 'submit',
                 }),
                 events: {
-                    submit: (event: Event) => {
+                    submit: (event) => {
                         Store.set('isLoading', true);
-                        const eventTarget = event.target as HTMLInputElement;
+                        const eventTarget = event.target as IEvent;
                         const form = eventTarget.form;
-                        if (isFormValid(form as HTMLFormElement, inputs)) {
-                            const form = eventTarget;
+                        if (isFormValid(form, inputs)) {
                             const formData: ISignInRequestData = {
                                 login: '',
                                 password: '',
