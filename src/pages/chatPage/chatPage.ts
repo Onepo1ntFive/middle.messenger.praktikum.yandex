@@ -5,7 +5,7 @@ import template from './chatPage.hbs?raw';
 import { isFormValid } from '../../helpers/form';
 import Router from '../../services/Router';
 import { IEvent, Routes, WS_BASE_URL } from '../../consts/consts';
-import Store, { Indexed, IState, TChatDetails, TCurrentChat, TMessage, TUserDetails } from '../../services/Store';
+import Store, { IState, TChatDetails, TCurrentChat, TMessage, TUserDetails } from '../../services/Store';
 import connect from '../../services/connectStore';
 import ChatController from '../../controller/ChatController';
 import { ChatList } from '../../components/chatList';
