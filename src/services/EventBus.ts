@@ -33,4 +33,3 @@ export default class EventBus<E extends string> {
         });
     }
 }
-
