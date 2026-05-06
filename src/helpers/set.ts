@@ -13,7 +13,7 @@ function set(object: Indexed | unknown, path: string, value: unknown): Indexed |
     if (path) {
         const result = path.split('.').reduceRight<Indexed>((acc, key) => ({
             [key]: acc,
-        }), value as unknown);
+        }), value as Indexed);
         return merge(object as Indexed, result);
     }
 

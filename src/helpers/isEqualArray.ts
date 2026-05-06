@@ -6,7 +6,7 @@ function deepEqualArray(arr1: Array<unknown>, arr2: Array<unknown>) {
     if (arr1.length !== arr2.length) return false;
 
     for (let i = 0; i < arr1.length; i++) {
-        if (!deepEqualArray(arr1[i], arr2[i])) return false;
+        if (!deepEqualArray(arr1[i] as Array<unknown>, arr2[i] as Array<unknown>)) return false;
     }
     return true;
 }
