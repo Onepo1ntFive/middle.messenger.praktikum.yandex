@@ -14,6 +14,7 @@ function merge(lhs: Record<string, unknown>, rhs: Record<string, unknown>): Inde
                 lhs[p] = rhs[p];
             }
         } catch (e) {
+            if (e) {}
             lhs[p] = rhs[p];
         }
     });

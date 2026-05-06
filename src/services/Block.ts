@@ -23,12 +23,12 @@ export default class Block {
     props: Props;
     protected events: Props;
 
-    protected eventBus: () => EventBus;
+    protected eventBus: () => EventBus<string>;
 
     children: Record<string, Block | Block[]>
 
     constructor(propsAndChildren: Props) {
-        const eventBus = new EventBus();
+        const eventBus = new EventBus<string>();
         const {children, props} = this._getChildren(propsAndChildren);
         this.children = children;
         this.props = this._makePropsProxy(props);
@@ -59,7 +59,7 @@ export default class Block {
         return {children, props};
     }
 
-    private _registerEvents(eventBus: EventBus) {
+    private _registerEvents(eventBus: EventBus<string>) {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -67,14 +67,12 @@ export default class Block {
     }
 
     private _addEvents(): void {
-        const {events = {}} = this.props;
+        const {events = {}} = this.props as { events?: Record<string, EventListener> };
 
         this._removeEvents();
 
-        Object.entries(events).forEach(([key, value]) => {
-            const eventName = key as keyof HTMLElementEventMap;
-            const listener = value as EventListener;
-            this.element?.addEventListener(eventName, listener, true);
+        Object.entries(events).forEach(([eventName, listener]) => {
+            this.element?.addEventListener(eventName, listener);
         });
     }
 
@@ -197,7 +195,7 @@ export default class Block {
     }
 
     private _makePropsProxy(props: Props): Props {
-        const self: this = this;
+        const emit = <T extends unknown[] = []>(event: string, ...args: T) => this.eventBus().emit(event, ...args)
 
         return new Proxy(props, {
             get(target: Props, prop: string) {
@@ -216,7 +214,7 @@ export default class Block {
 
                 const oldTarget = {...target};
                 target[prop] = value;
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                 return true;
             },
 
