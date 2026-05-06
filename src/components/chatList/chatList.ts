@@ -7,8 +7,9 @@ import isEqualArray from '../../helpers/isEqualArray';
 import { TChatListItem } from '../chatListItem/chatListItem';
 
 interface ChatListProps extends Props {
-    chatItems: Array<TChatListItem>
+    chatItems: Array<TChatDetails>
     onCurrentChatUpdate: void;
+    chats: TChatDetails[];
 
     [key: string]: unknown;
 }
@@ -22,8 +23,9 @@ class ChatList extends Block {
     }
 
     private updateChatItems() {
-        if (this.props.chatItems.length) {
-            this.children.chatItems = this.props.chatItems.map((props: Props) => {
+        const props = this.props as ChatListProps;
+        if (props.chatItems.length) {
+            this.children.chatItems = props.chatItems.map((props: TChatDetails) => {
                     return new ChatListItem({
                         avatar: props.avatar ? `https://ya-praktikum.tech/api/v2/resources/${ props.avatar }`: '',
                         created_by: props.created_by,
@@ -42,7 +44,7 @@ class ChatList extends Block {
 
     protected componentDidUpdate(): boolean {
         const state = Store.getState()
-        const props: Props = this.props
+        const props: ChatListProps = this.props
         if (isEqualArray(state.chats, props.chats)) {
             this.updateChatItems();
         }

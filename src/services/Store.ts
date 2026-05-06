@@ -31,19 +31,21 @@ export type TCurrentChat = {
     token: string | null,
 };
 
-export type TChatDetails = {
-    id: number,
-    title: string,
+export interface TChatDetails {
     avatar: string,
-    unread_count: number,
     created_by: number,
-    token: string | null,
+    id: number,
     last_message: {
         user: Omit<TUserDetails, 'id' | 'display_name'>,
         time: string,
         content: string,
     } | null,
-};
+    title: string,
+    unread_count: number,
+    active: boolean,
+    token: string,
+    onCurrentChatUpdate: () => void,
+}
 
 export type TMessage = {
     chat_id?: number,
