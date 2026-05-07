@@ -6,7 +6,6 @@ import connect from '../../services/connectStore';
 import Store, { IState, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
-import { IEvent } from '../../consts/consts';
 
 interface PasswordPageProps extends Props {
     onRouteShowProfile: () => void;
@@ -58,8 +57,7 @@ class PasswordPage extends Block {
             events: {
                 submit: (event) => {
                     event.preventDefault();
-                    const eventTarget = event.target as IEvent;
-                    const form = eventTarget.form;
+                    const form = event.target as HTMLFormElement;
                     if (isFormValid(form, inputs)) {
                         Store.set('isLoading', true);
                         const oldPasswordInput = document.getElementById('oldPassword') as HTMLFormElement;
@@ -80,6 +78,8 @@ class PasswordPage extends Block {
                             newPasswordRepeatInput.value = '';
                             SettingsController.showProfile();
                             props.onRouteShowProfile();
+                        }).catch(error => {
+                            console.warn(error)
                         })
                     }
                 }

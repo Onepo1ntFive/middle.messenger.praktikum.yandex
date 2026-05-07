@@ -7,7 +7,6 @@ import Store, { IState, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import AuthController from '../../controller/AuthController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
-import { IEvent } from '../../consts/consts';
 
 interface ProfilePageProps extends Props {
     onRouteEditPassword: () => void;
@@ -133,8 +132,7 @@ class ProfilePage extends Block {
                 },
                 submit: (event) => {
                     event.preventDefault();
-                    const eventTarget = event.target as IEvent;
-                    const form = eventTarget.form;
+                    const form = event.target as HTMLFormElement;
                     if (isFormValid(form, profileInputs)) {
                         const state = Store.getState();
                         Store.set('isLoading', true);
@@ -160,6 +158,8 @@ class ProfilePage extends Block {
                                     }
                                 })
                             }
+                        }).catch(error => {
+                            console.warn(error)
                         })
                     }
                 }

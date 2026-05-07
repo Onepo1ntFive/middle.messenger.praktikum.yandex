@@ -67,12 +67,14 @@ export default class Block {
     }
 
     private _addEvents(): void {
-        const {events = {}} = this.props as { events?: Record<string, EventListener> };
+        const {events = {}} = this.props;
 
         this._removeEvents();
 
-        Object.entries(events).forEach(([eventName, listener]) => {
-            this.element?.addEventListener(eventName, listener);
+        Object.entries(events).forEach(([key, value]) => {
+            const eventName = key as keyof HTMLElementEventMap;
+            const listener = value as EventListener;
+            this.element?.addEventListener(eventName, listener, true);
         });
     }
 
@@ -195,7 +197,7 @@ export default class Block {
     }
 
     private _makePropsProxy(props: Props): Props {
-        const emit = <T extends unknown[] = []>(event: string, ...args: T) => this.eventBus().emit(event, ...args)
+        const self: this = this;
 
         return new Proxy(props, {
             get(target: Props, prop: string) {
@@ -214,7 +216,7 @@ export default class Block {
 
                 const oldTarget = {...target};
                 target[prop] = value;
-                emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
                 return true;
             },
 

@@ -3,7 +3,7 @@ import Block, { type Props } from '../../services/Block';
 import template from './loginPage.hbs?raw';
 import { Button, Form, Input, Link } from '../../components';
 import { loginFormData } from '../../demoData';
-import { IEvent, Routes } from '../../consts/consts';
+import { Routes } from '../../consts/consts';
 import { isFormValid } from '../../helpers/form';
 import { ISignInRequestData } from '../../api/AuthApi';
 import AuthController from '../../controller/AuthController';
@@ -55,23 +55,23 @@ class LoginPage extends Block {
                 }),
                 events: {
                     submit: (event) => {
-                        Store.set('isLoading', true);
-                        const eventTarget = event.target as IEvent;
-                        const form = eventTarget.form;
-                        if (isFormValid(form, inputs)) {
+                        event.preventDefault();
+                        const form = event.target as EventTarget;
+                        if (isFormValid(form as HTMLFormElement, inputs)) {
+                            Store.set('isLoading', true);
                             const formData: ISignInRequestData = {
                                 login: '',
                                 password: '',
                             };
-                            for (const item of form) {
+                            for (const item of form as HTMLFormElement) {
                                 const formItem = item as HTMLFormElement;
                                 if (formItem.name as keyof ISignInRequestData in formData) {
                                     formData[formItem.name as keyof ISignInRequestData] = formItem.value;
-
                                 }
                             }
                             AuthController.signIn(formData).then((response: IResponse<IResponseAdd>) => {
                                 if (response.status !== 200) {
+                                    Store.set('isLoading', false);
                                     const resp = JSON.parse(response.response)
                                     alert(`${ response.status }: ${ resp.reason }`);
                                     return;
@@ -91,7 +91,13 @@ class LoginPage extends Block {
                                             Router.go(Routes.MESSENGER);
                                         }
                                     }
+                                }).catch(error => {
+                                    Store.set('isLoading', false);
+                                    console.warn(error)
                                 });
+                            }).catch(error => {
+                                Store.set('isLoading', false);
+                                console.warn(error)
                             });
                         }
                     }

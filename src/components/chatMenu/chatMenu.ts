@@ -44,6 +44,8 @@ class ChatMenu extends Block {
                                 this.getChatUsers().then(() => {
                                     this.updateChatMenuItems();
                                 });
+                            }).catch(error => {
+                                console.warn(error)
                             })
                         }
                     }
@@ -92,6 +94,8 @@ class ChatMenu extends Block {
             this.setProps({
                 chatUsers: resp,
             })
+        }).catch(error => {
+            console.warn(error)
         })
     }
 
@@ -116,9 +120,12 @@ class ChatMenu extends Block {
                                 }
                                 this.getChatUsers().then(() => {
                                     this.updateChatMenuItems();
+                                }).catch(error => {
+                                    console.warn(error)
                                 })
+                            }).catch(error => {
+                                console.warn(error)
                             })
-
                         },
                         deleteButton: new Button({
                             label: 'Удалить',
@@ -136,7 +143,7 @@ class ChatMenu extends Block {
         if (isEqualArray(state.currentChat.chatUsers, props.chatUsers)) {
             this.updateChatMenuItems();
         }
-        return true;
+        return super.componentDidUpdate();
     }
 
     protected init() {

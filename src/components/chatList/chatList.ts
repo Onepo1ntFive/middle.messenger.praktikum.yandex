@@ -47,7 +47,7 @@ class ChatList extends Block {
         if (isEqualArray(state.chats, props.chats)) {
             this.updateChatItems();
         }
-        return true;
+        return super.componentDidUpdate();
     }
 
     protected init() {

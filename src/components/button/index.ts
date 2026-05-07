@@ -6,6 +6,7 @@ interface ButtonProps extends Props {
     label: string,
     type?: string,
     class?: string,
+    disabled?: boolean
 }
 
 export class Button extends Block {

@@ -85,6 +85,7 @@ export interface IState {
     settings: TSettings,
     searchResults: TUserDetails[],
     websocket: WebSocket | null,
+    newChatName: string | null,
 }
 
 export enum StoreEvents {
@@ -137,4 +138,5 @@ export default new Store({
     },
     searchResults: [],
     websocket: null,
+    newChatName: null,
 });

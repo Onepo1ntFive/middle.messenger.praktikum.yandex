@@ -128,6 +128,8 @@ class RegistrationPage extends Block {
                                     AuthApi.getUser();
                                     Router.go(Routes.LOGIN)
                                 }
+                            }).catch(error => {
+                                console.warn(error)
                             });
                         }
                     }

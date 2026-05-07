@@ -21,21 +21,23 @@ export class Input extends Block {
             ...props,
             events: {
                 blur: (event) => {
-                    const input = event.target as HTMLInputElement;
-                    const fieldName = props.name as FieldName;
-                    if (props.name && validators[`${fieldName}`]) {
-                        const error = validator.validateField(fieldName, input.value);
-                        this.setProps({
-                            ...props,
-                            value: input.value,
-                            error: error,
-                        })
-                    }
-                    else {
-                        this.setProps({
-                            ...props,
-                            value: input.value,
-                        })
+                    if (!['message', 'newChatName'].includes(`${props.name}`)) {
+                        const input = event.target as HTMLInputElement;
+                        const fieldName = props.name as FieldName;
+                        if (props.name && validators[`${fieldName}`]) {
+                            const error = validator.validateField(fieldName, input.value);
+                            this.setProps({
+                                ...props,
+                                value: input.value,
+                                error: error,
+                            })
+                        }
+                        else {
+                            this.setProps({
+                                ...props,
+                                value: input.value,
+                            })
+                        }
                     }
                 },
             }

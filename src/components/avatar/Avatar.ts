@@ -27,6 +27,8 @@ class Avatar extends Block {
                                 avatarSrc: resp.avatar ? `https://ya-praktikum.tech/api/v2/resources${ resp.avatar }` : '',
                             })
                         }
+                    }).catch(error => {
+                        console.warn(error)
                     })
                 }
             }

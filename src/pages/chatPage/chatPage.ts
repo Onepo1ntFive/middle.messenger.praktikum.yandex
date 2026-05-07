@@ -60,35 +60,37 @@ class ChatPage extends Block {
                 label: 'Новый чат',
                 name: 'newChatName',
                 id: 'newChatName',
-                value: '',
             }),
             ChatMenu: new ChatMenu({
                 menuActive: false,
             }),
             ButtonNew: new Button({
-                type: 'button',
+                type: 'submit',
                 label: 'Создать',
                 class: 'button--add',
                 events: {
-                    click: () => {
+                    click: (event) => {
+                        event.preventDefault();
+
+                        const eventTarget = event.target as IEvent;
+                        const form = eventTarget.form;
+                        const formInput = form[0] as HTMLFormElement
+
+                        if (!formInput.value.length) {
+                            alert('Имя чата не может быть пустым');
+                            return;
+                        }
                         this.setProps({
                             isLoading: true,
                         })
                         Store.set('isLoading', true)
-                        console.log(this.children)
-                        const InputNew = this.children.InputNew as Input;
-                        const InputNewProps = InputNew.getProps();
-                        ChatController.createChat({title: InputNewProps.value as string}).then((response: IResponse<IResponseAdd>) => {
+                        ChatController.createChat({title: formInput.value as string}).then((response: IResponse<IResponseAdd>) => {
                             if (response.status !== 200) {
                                 const resp = JSON.parse(response.response)
                                 alert(`${ response.status }: ${ resp.reason }`);
                                 return;
                             }
                             ChatController.getChats().then(async (response: IResponse<IResponseAdd>) => {
-                                this.setProps({
-                                    isLoading: false,
-                                })
-                                Store.set('isLoading', false)
                                 const resp = JSON.parse(response.response);
                                 for (const respElement of resp) {
                                     await ChatController.getChatToken(respElement.id).then((tokenResponse: IResponse<IResponseAdd>) => {
@@ -101,13 +103,21 @@ class ChatPage extends Block {
                                             const tokenResp = JSON.parse(tokenResponse.response);
                                             respElement.token = tokenResp.token
                                         }
+                                    }).catch(error => {
+                                        console.warn(error)
                                     })
                                 }
+                                this.setProps({
+                                    isLoading: false,
+                                })
+                                Store.set('isLoading', false)
                                 updateChatList(resp, this);
+                            }).catch(error => {
+                                console.warn(error)
                             })
-                            InputNew.setProps({
-                                value: '',
-                            })
+                            formInput.value = '';
+                        }).catch(error => {
+                            console.warn(error)
                         });
                     }
                 }
@@ -119,7 +129,8 @@ class ChatPage extends Block {
                 events: {
                     click: (event: Event) => {
                         event.preventDefault();
-                        this.submitMessage(event);
+                        const inputComponent = this.children.Input as Input;
+                        this.submitMessage(event, inputComponent);
                     }
                 }
             }),
@@ -137,10 +148,6 @@ class ChatPage extends Block {
 
         Store.set('isLoading', true)
         ChatController.getChats().then(async (response: IResponse<IResponseAdd>) => {
-            this.setProps({
-                isLoading: false,
-            })
-            Store.set('isLoading', false)
             if (response.status !== 200) {
                 const resp = JSON.parse(response.response);
                 alert(`${ response.status }: ${ resp.reason }`);
@@ -159,17 +166,33 @@ class ChatPage extends Block {
                             const tokenResp = JSON.parse(tokenResponse.response);
                             respElement.token = tokenResp.token
                         }
+                    }).catch(error => {
+                        console.warn(error)
                     })
                 }
                 updateChatList(resp, this);
             }
+            this.setProps({
+                isLoading: false,
+            })
+            Store.set('isLoading', false)
+        }).catch(error => {
+            console.warn(error)
         })
+
+        console.log(this.children.InputNew)
     }
 
-    private submitMessage(event: Event) {
+    private submitMessage(event: Event, inputComponent: Input) {
         const eventTarget = event.target as IEvent;
         const form = eventTarget.form;
         const formInput = form[0] as HTMLFormElement
+        if (!formInput.value) {
+            inputComponent.setProps({
+                error: 'Поле не должно быть пустым'
+            })
+            return
+        }
         if (eventTarget.form) {
             this.socket?.send(
                 JSON.stringify({
@@ -177,6 +200,10 @@ class ChatPage extends Block {
                     type: 'message',
                 })
             );
+            inputComponent.setProps({
+                error: null,
+                value: '',
+            })
         }
     }
 
@@ -228,7 +255,6 @@ class ChatPage extends Block {
             const currentChat = props.currentChat as TCurrentChat;
             if (Array.isArray(mess)) {
                 const messages = deepArrayMerge(currentChat.messages.reverse(), mess);
-                console.log(messages)
                 this.setProps({
                     currentChat: {
                         ...currentChat,
@@ -237,7 +263,6 @@ class ChatPage extends Block {
                 })
             } else {
                 const messages = deepArrayMerge(currentChat.messages.reverse(), [mess]) as TMessage[];
-                console.log(messages)
                 Store.set('currentChat.messages', messages);
                 this.setProps({
                     currentChat: {
@@ -274,11 +299,13 @@ function updateChatList(chats: Array<TChatDetails>, block: Block) {
 }
 
 function mapUserToProps(state: IState): {
+    newChatName: string | unknown,
     user: TUserDetails | unknown,
     chats: TChatDetails[] | unknown,
     currentChat: TChatDetails | unknown,
 } {
     return {
+        newChatName: state.newChatName,
         user: state.user,
         chats: state.chats,
         currentChat: state.currentChat,
