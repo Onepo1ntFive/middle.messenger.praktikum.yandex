@@ -34,9 +34,11 @@ class ChatMenuItem extends Block {
 
 function mapUserToProps(state: IState): {
     currentChat: TChatDetails | unknown,
+    user: TUserDetails | unknown,
 } {
     return {
         currentChat: state.currentChat,
+        user: state.user,
     };
 }
 

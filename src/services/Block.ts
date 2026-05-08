@@ -2,6 +2,10 @@ import EventBus from './EventBus';
 import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 
+Handlebars.registerHelper('ifNotEquals', function(arg1, arg2, options) {
+    return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+});
+
 export interface Props {
     attr?: Record<string, string>;
     events?: Record<string, EventListener>;

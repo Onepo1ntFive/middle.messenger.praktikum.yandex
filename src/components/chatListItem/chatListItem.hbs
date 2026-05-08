@@ -8,9 +8,8 @@
             <div class='page-chat_list-time' title='{{{date}}} {{{time}}}'>{{{time}}}</div>
         </div>
         <div class='page-chat_list-message'>
-            {{#if lastMe}}<strong>Вы:</strong>{{/if}}
-            {{#if lastMessage}}
-                {{{lastMessage}}}
+            {{#if last_message}}
+                <p>{{{last_message.user.display_name}}}: {{{last_message.content}}}</p>
             {{/if}}
         </div>
         {{#if unread_count}}

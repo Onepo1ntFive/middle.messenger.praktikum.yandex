@@ -12,7 +12,8 @@ import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
 
 interface ChatListItemProps extends Props {
     chatUsers: Array<TChatMenuItem>;
-    menuActive: boolean,
+    menuActive: boolean;
+    onChatDelete: (chatId: number) => void;
 
     [key: string]: unknown;
 }
@@ -44,6 +45,31 @@ class ChatMenu extends Block {
                                 this.getChatUsers().then(() => {
                                     this.updateChatMenuItems();
                                 });
+                            }).catch(error => {
+                                console.warn(error)
+                            })
+                        }
+                    }
+                }
+            }),
+            DeleteChat: new Button({
+                type: 'button',
+                label: 'Удалить чат!?',
+                class: 'button--warn',
+                events: {
+                    click: () => {
+                        const state = Store.getState();
+                        if (state.currentChat) {
+                            const chatId = Number(state.currentChat.id);
+                            ChatController.deleteChat(chatId).then((response: IResponse<IResponseAdd>) => {
+                                if (response.status !== 200) {
+                                    alert(`${ response.status }`);
+                                    return;
+                                }
+                                this.setProps({
+                                    menuActive: false,
+                                })
+                                props.onChatDelete(chatId);
                             }).catch(error => {
                                 console.warn(error)
                             })

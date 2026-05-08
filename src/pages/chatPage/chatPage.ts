@@ -63,6 +63,24 @@ class ChatPage extends Block {
             }),
             ChatMenu: new ChatMenu({
                 menuActive: false,
+                onChatDelete: (chatId: number) => {
+                    Store.set('currentChat', {
+                        id: null,
+                        chatUsers: [],
+                        messages: [],
+                        token: null,
+                    })
+                    this.setProps({
+                        currentChat: {
+                            id: null,
+                            chatUsers: [],
+                            messages: [],
+                            token: null,
+                        }
+                    })
+                    const state = Store.getState();
+                    updateChatList(state.chats.filter(el => el.id !== chatId), this)
+                }
             }),
             ButtonNew: new Button({
                 type: 'submit',

@@ -4,5 +4,7 @@
         aka {{{display_name}}}
     {{/if}}
     <span>{{{id}}}</span>
-    {{{deleteButton}}}
+    {{#ifNotEquals user.id id}}
+        {{{deleteButton}}}
+    {{/ifNotEquals}}
 </li>

@@ -10,6 +10,10 @@ class ChatController extends Controller {
         return await ChatsApi.createChat(data);
     }
 
+    public deleteChat = async (chatId: number) => {
+        return await ChatsApi.deleteChat({chatId: chatId});
+    }
+
     public getChatUsers = async (chatId: number) => {
         return await ChatsApi.getChatUsers(chatId);
     }

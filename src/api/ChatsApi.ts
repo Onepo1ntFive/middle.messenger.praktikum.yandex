@@ -18,11 +18,15 @@ const options = {
 
 export default class ChatsApi extends BaseApi {
     static async getChats() {
-        return await new HTTPTransport().get('/chats', {...options});
+        return await new HTTPTransport().get('/chats?limit=9999', {...options});
     }
 
     static async createChat(data: IChatTitle) {
         return await new HTTPTransport().post('/chats', {...options, data});
+    }
+
+    static async deleteChat(data: Record<string, number>) {
+        return await new HTTPTransport().delete('/chats', {...options, data});
     }
 
     static async getChatUsers(chatId: number) {
