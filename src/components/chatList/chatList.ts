@@ -4,6 +4,7 @@ import Store, { IState, TChatDetails, TUserDetails } from '../../services/Store'
 import connect from '../../services/connectStore';
 import { ChatListItem } from '../chatListItem';
 import isEqualArray from '../../helpers/isEqualArray';
+import { BASE_URL } from '../../consts/consts';
 
 interface ChatListProps extends Props {
     chatItems: Array<TChatDetails>
@@ -26,7 +27,7 @@ class ChatList extends Block {
         if (props.chatItems.length) {
             this.children.chatItems = props.chatItems.map((props: TChatDetails) => {
                     return new ChatListItem({
-                        avatar: props.avatar ? `https://ya-praktikum.tech/api/v2/resources/${ props.avatar }` : '',
+                        avatar: props.avatar ? `${BASE_URL}/resources/${ props.avatar }` : '',
                         created_by: props.created_by,
                         id: props.id,
                         last_message: props.last_message,

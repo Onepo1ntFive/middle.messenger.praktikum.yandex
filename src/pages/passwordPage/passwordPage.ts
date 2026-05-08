@@ -6,6 +6,7 @@ import connect from '../../services/connectStore';
 import Store, { IState, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
+import { BASE_URL } from '../../consts/consts';
 
 interface PasswordPageProps extends Props {
     onRouteShowProfile: () => void;
@@ -51,7 +52,7 @@ class PasswordPage extends Block {
             ...buttons,
             Avatar: new Avatar({
                 ...props,
-                avatarSrc: user.avatar ? `https://ya-praktikum.tech/api/v2/resources${ user.avatar }` : '',
+                avatarSrc: user.avatar ? `${BASE_URL}/resources${ user.avatar }` : '',
             }),
             inputs: inputs,
             events: {

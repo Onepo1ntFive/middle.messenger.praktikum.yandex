@@ -179,8 +179,6 @@ class ChatPage extends Block {
         }).catch(error => {
             console.warn(error)
         })
-
-        console.log(this.children.InputNew)
     }
 
     private submitMessage(event: Event, inputComponent: Input) {

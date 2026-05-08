@@ -5,6 +5,7 @@ import connect from '../../services/connectStore';
 import Store, { IState, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
+import { BASE_URL } from '../../consts/consts';
 
 interface AvatarProps extends Props {
     avatarSrc?: string | null,
@@ -24,7 +25,7 @@ class Avatar extends Block {
                             const resp = JSON.parse(response.response)
                             Store.set('user.avatar', resp.avatar)
                             this.setProps({
-                                avatarSrc: resp.avatar ? `https://ya-praktikum.tech/api/v2/resources${ resp.avatar }` : '',
+                                avatarSrc: resp.avatar ? `${BASE_URL}/resources${ resp.avatar }` : '',
                             })
                         }
                     }).catch(error => {

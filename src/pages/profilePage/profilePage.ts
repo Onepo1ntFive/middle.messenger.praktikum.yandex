@@ -7,6 +7,7 @@ import Store, { IState, TSettings, TUserDetails } from '../../services/Store';
 import SettingsController from '../../controller/SettingsController';
 import AuthController from '../../controller/AuthController';
 import { IResponse, IResponseAdd } from '../../api/HTTPTransport';
+import { BASE_URL } from '../../consts/consts';
 
 interface ProfilePageProps extends Props {
     onRouteEditPassword: () => void;
@@ -118,7 +119,7 @@ class ProfilePage extends Block {
             profileData: user.display_name,
             Avatar: new Avatar({
                 ...props,
-                avatarSrc: user.avatar ? `https://ya-praktikum.tech/api/v2/resources${ user.avatar }` : '',
+                avatarSrc: user.avatar ? `${BASE_URL}/resources${ user.avatar }` : '',
             }),
             inputs: profileInputs,
             events: {
