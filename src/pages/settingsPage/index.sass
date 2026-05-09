@@ -16,6 +16,7 @@ $mainClass: '.page-profile'
         border: 0
         border-right: 1px solid $colorGrayLight
         background: $colorGrayLighter
+        text-indent: -9999px
         cursor: pointer
 
         &:hover
@@ -46,6 +47,9 @@ $mainClass: '.page-profile'
         font-size: 16px
         font-weight: 600
 
+        span
+            color: $colorGray
+
     &_avatar
         padding-bottom: 20px
 
@@ -54,6 +58,12 @@ $mainClass: '.page-profile'
 
     &_list
         padding-bottom: 60px
+
+        &.editable
+            input
+                pointer-events: all
+                color: $colorBlack
+
 
     &_list-item
         padding-top: 10px
@@ -76,3 +86,4 @@ $mainClass: '.page-profile'
             margin-left: 20px
             text-align: right
             color: $colorGray
+            pointer-events: none

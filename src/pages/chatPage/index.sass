@@ -5,6 +5,24 @@ $mainClass: '.page-chat'
     height: 100%
     display: flex
     flex-flow: row nowrap
+    &::before
+        content: ''
+        opacity: 0
+        display: block
+        position: fixed
+        z-index: 9999
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        background-color: $colorWhite50
+        pointer-events: none
+        transition: opacity 0.3s ease-in-out
+
+    &.loading
+        &::before
+            pointer-events: all
+            opacity: 1
 
     &_sidebar
         width: 310px
@@ -35,11 +53,15 @@ $mainClass: '.page-chat'
             border-radius: 12px
             display: none
             position: absolute
+            z-index: 9999
             top: calc(100% + 20px)
             right: 0
             width: 220px
             background-color: $colorWhite
             box-shadow: 0 0 6px 0 $colorPureBlack15
+
+            &.active
+                display: block
 
             &::before
                 content: ''
@@ -62,20 +84,27 @@ $mainClass: '.page-chat'
                 line-height: 1.25
                 cursor: pointer
 
+                & > div
+                    flex: 1 auto
+
                 &:not(:last-child)
                     padding-bottom: 16px
 
                 &:hover
                     color: $colorBlue
 
-        &:hover
-            #{$mainClass}
-                &_menu
-                    &-list
-                        display: block
+            &--users
+                width: 300px
 
-                    &-icon
-                        background-color: $colorGrayLight
+                li
+                    display: flex
+                    flex-flow: row nowrap
+                    justify-content: space-between
+
+                    span
+                        padding-left: 5px
+                        padding-right: 5px
+                        margin-left: auto
 
         &--up
             #{$mainClass}
@@ -111,6 +140,7 @@ $mainClass: '.page-chat'
             flex-flow: row nowrap
             align-items: center
             border-bottom: 1px solid $colorGrayLight
+            cursor: pointer
 
             &:last-child
                 border-bottom: 0
@@ -123,16 +153,34 @@ $mainClass: '.page-chat'
                     content: ''
                     display: block
                     position: absolute
-                    inset: 2px -10px -10px 2px
+                    inset: 0
                     background-color: $colorBlue10
                     z-index: -1
+
+            form
+                display: flex
+                flex-flow: row nowrap
+                align-items: center
+                width: 100%
+
+                & > div
+                    flex: 1 auto
 
         &-avatar
             width: 47px
             height: 47px
             border-radius: 100px
             overflow: hidden
+            position: relative
             background-color: $colorGrayLight
+
+            img
+                position: absolute
+                top: 50%
+                left: 50px
+                width: 100%
+                height: 100%
+                background-size: cover
 
         &-content
             padding-left: 10px
@@ -162,6 +210,11 @@ $mainClass: '.page-chat'
                 font-weight: bold
                 color: $colorBlack
 
+            p
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+
         &-unread
             display: flex
             flex-flow: row nowrap
@@ -183,6 +236,16 @@ $mainClass: '.page-chat'
         width: calc(100% - 310px)
         display: flex
         flex-flow: column nowrap
+        position: relative
+
+        &-nochat
+            padding: 5px 10px
+            border-radius: 5px
+            background-color: $colorGrayLight
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
 
         &-footer
             padding-top: 10px
@@ -229,6 +292,10 @@ $mainClass: '.page-chat'
             justify-content: flex-end
             overflow-y: auto
 
+            & > div
+                height: 100%
+                overflow: auto
+
         &-date
             padding-bottom: 30px
             text-align: center
@@ -260,6 +327,13 @@ $mainClass: '.page-chat'
                             background: rgba(82 82 82 / 0.5)
                             border-radius: 20px
                             color: $colorWhite
+
+            &--info
+                background: none
+                text-align: center
+                margin-left: auto
+                margin-right: auto
+                border-radius: 12px
 
             &--user
                 padding-right: 40px

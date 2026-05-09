@@ -17,6 +17,9 @@ $mainClass: '.button'
     &:hover
         background: $colorBlue90
 
+    &.disabled,
+    &:disabled
+        cursor: not-allowed
 
     &--arrow
         position: relative
@@ -34,3 +37,69 @@ $mainClass: '.button'
             width: 100%
             height: 100%
             background: url("/images/icon-arrow.svg") 50% 50% no-repeat
+
+    &--add
+        position: relative
+        width: 34px
+        height: 34px
+        border-radius: 100px
+        text-indent: -9999px
+
+        &::before,
+        &::after
+            content: ''
+            display: block
+            position: absolute
+            top: 50%
+            left: 50%
+            height: 2px
+            width: 15px
+            transform-origin: center center
+            transform: translate(-50%, -50%)
+            background-color: $colorWhite
+
+        &::after
+            transform: translate(-50%, -50%) rotate(-90deg)
+
+    &--warn
+        background-color: $colorRedLight
+
+        &:hover
+            background-color: $colorRed
+
+    &--menu
+        padding: 0
+        width: 24px
+        height: 24px
+        text-indent: -9999px
+        background: url("/images/icon-menu.svg") 50% 50% no-repeat
+
+        &:hover
+            background: url("/images/icon-menu.svg") 50% 50% no-repeat $colorGrayLight
+
+    &--delete
+        position: relative
+        width: 24px
+        height: 24px
+        text-indent: -9999px
+        border-radius: 100px
+
+        &::before
+            content: ''
+            display: block
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            background: url("/images/trash.svg") 50% 50% no-repeat
+            background-size: 32px
+            width: 24px
+            height: 24px
+
+    &--add-small
+        width: 24px
+        height: 24px
+
+        &::before,
+        &::after
+            width: 10px

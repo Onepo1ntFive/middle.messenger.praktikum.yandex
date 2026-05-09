@@ -1,0 +1,17 @@
+<div class='page-chat_menu'>
+    <div class='page-chat_menu-icon'>
+        {{{MenuButton}}}
+    </div>
+
+    <ul class='page-chat_menu-list page-chat_menu-list--users{{#if menuActive}} active{{/if}}'>
+        <li>
+            {{{AddUserInput}}}{{{AddUserButton}}}
+        </li>
+        {{#each chatUsers}}
+            {{{this}}}
+        {{/each}}
+        <li>
+            {{{DeleteChat}}}
+        </li>
+    </ul>
+</div>

@@ -37,9 +37,6 @@ export const validators = {
         const regex = /^[/+]?[0-9]{10,15}$/;
         return regex.test(value) ? null : messages.phone;
     },
-    message: (value: string): string | null => {
-        return value.trim() ? null : messages.notEmpty;
-    }
 };
 
 export type FieldName = keyof typeof validators;

@@ -1,0 +1,31 @@
+@use "../../styles/vars" as *
+
+.loader
+    display: block
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: 9999
+    background: $colorWhite50
+    filter: blur(4px) contrast(12)
+
+    &:before
+        content: ""
+        display: block
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        height: 40px
+        width: 100px
+        aspect-ratio: 3
+        background: radial-gradient(35% 146% at 50% 159%, #0000 64%, #000 66% 98%, #0000 101%) 0 0, radial-gradient(35% 146% at 50% -59%, #0000 64%, #000 66% 98%, #0000 101%) 100% 100%
+        background-size: calc(200% / 3) 50%
+        background-repeat: repeat-x
+        animation: l11 1s infinite linear
+
+@keyframes l11
+    to
+        background-position: -200% 0, -100% 100%

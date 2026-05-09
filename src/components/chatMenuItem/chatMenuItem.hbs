@@ -1,0 +1,10 @@
+<li>
+    {{{first_name}}}
+    {{#if display_name}}
+        aka {{{display_name}}}
+    {{/if}}
+    <span>{{{id}}}</span>
+    {{#ifNotEquals user.id id}}
+        {{{deleteButton}}}
+    {{/ifNotEquals}}
+</li>

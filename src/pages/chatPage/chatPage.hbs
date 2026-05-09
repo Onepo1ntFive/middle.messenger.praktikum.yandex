@@ -1,66 +1,66 @@
 <section class='page-chat'>
+    {{#if isLoading }}
+        <div class='loader'></div>
+    {{/if}}
     <aside class='page-chat_sidebar'>
         <header class='page-chat_header'>
             <div class='page-chat_nav'>
                 {{{ Link }}}
             </div>
             <div class='page-chat_search'>
-                <form action='' method='get'>
+                <form>
                     {{{ InputSearch }}}
                 </form>
             </div>
         </header>
-        <ul class='page-chat_list'>
-            {{#each chatListItems}}
-                {{{ this }}}
-            {{/each}}
-        </ul>
+        <li class='page-chat_list-item'>
+            <form>
+                {{{ InputNew }}}
+                {{{ ButtonNew }}}
+            </form>
+        </li>
+        {{{ ChatsList }}}
     </aside>
     <main class='page-chat_chat'>
-        <header class='page-chat_chat-header'>
-            <div class='page-chat_chat-user'>
-                <div class='page-chat_chat-user-avatar'></div>
-                Вадим
-            </div>
-            <div class='page-chat_menu'>
-                <div class='page-chat_menu-icon'><img src='/images/icon-menu.svg' alt='menu'></div>
-                <ul class='page-chat_menu-list'>
-                    <li><img src='/images/icon-add.svg' alt='add'> Добавить пользователя</li>
-                    <li><img src='/images/icon-delete.svg' alt='delete'> Удалить пользователя</li>
-                </ul>
-            </div>
-        </header>
-        <section class='page-chat_chat-list'>
-            <div class='page-chat_chat-date'>19 июня</div>
-            <div class='page-chat_chat-message'>
-                <p>Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.</p>
-                <p>Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.</p>
-                <div class='page-chat_chat-time'>11:56</div>
-            </div>
-            <div class='page-chat_chat-message page-chat_chat-message--media'>
-                <img src='/images/chat-media.jpg' alt='media'>
-                <div class='page-chat_chat-time'>11:56</div>
-            </div>
-            <div class='page-chat_chat-message page-chat_chat-message--user page-chat_chat-message--read'>
-                <p>Круто!</p>
-                <div class='page-chat_chat-time'>11:57</div>
-            </div>
-        </section>
-        <footer class='page-chat_chat-footer'>
-            <div class='page-chat_menu page-chat_menu--up'>
-                <div class='page-chat_menu-icon'><img src='/images/icon-attach.svg' alt='attach'></div>
-                <ul class='page-chat_menu-list'>
-                    <li><img src='/images/icon-media.svg' alt='media'> Фото или Видео</li>
-                    <li><img src='/images/icon-file.svg' alt='file'> Файл</li>
-                    <li><img src='/images/icon-geo.svg' alt='geo'> Локация</li>
-                </ul>
-            </div>
-            <form action='' method='get'>
-                <div class='page-chat_chat-input'>
-                    {{{ Input }}}
+        {{#if currentChat.id }}
+            <header class='page-chat_chat-header'>
+                <div class='page-chat_chat-user'>
+                    <div class='page-chat_chat-user-avatar'>
+                        {{#if currentChat.avatar }}
+                            <img src='{{{currentChat.avatar}}}' alt='{{{currentChat.title}}}'>
+                        {{/if}}
+                    </div>
+                    {{{currentChat.title}}}
                 </div>
-                {{{ Button }}}
-            </form>
-        </footer>
+
+                {{{ ChatMenu }}}
+
+            </header>
+            <section class='page-chat_chat-list'>
+                <div>
+                    {{#each chatMessages }}
+                        {{{this}}}
+                    {{/each}}
+                </div>
+            </section>
+            <footer class='page-chat_chat-footer'>
+                <div class='page-chat_menu page-chat_menu--up'>
+                    <div class='page-chat_menu-icon'><img src='/images/icon-attach.svg' alt='attach'></div>
+                    <ul class='page-chat_menu-list'>
+                        <li><img src='/images/icon-media.svg' alt='media'> Фото или Видео</li>
+                        <li><img src='/images/icon-file.svg' alt='file'> Файл</li>
+                        <li><img src='/images/icon-geo.svg' alt='geo'> Локация</li>
+                    </ul>
+                </div>
+                <form>
+                    <div class='page-chat_chat-input'>
+                        {{{ Input }}}
+                    </div>
+                    {{{ Button }}}
+                </form>
+            </footer>
+        {{else}}
+            <div class='page-chat_chat-nochat'>ヽ(°〇°)ﾉ Чат.. выбери..</div>
+        {{/if}}
     </main>
 </section>

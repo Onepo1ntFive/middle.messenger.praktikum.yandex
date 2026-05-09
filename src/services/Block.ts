@@ -2,11 +2,15 @@ import EventBus from './EventBus';
 import Handlebars from 'handlebars';
 import { v4 as makeUUID } from 'uuid';
 
-export interface Props {
-    [key: string]: unknown;
+Handlebars.registerHelper('ifNotEquals', function(arg1, arg2, options) {
+    return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+});
 
+export interface Props {
     attr?: Record<string, string>;
     events?: Record<string, EventListener>;
+
+    [key: string]: unknown;
 }
 
 export default class Block {
@@ -20,15 +24,15 @@ export default class Block {
     protected element: HTMLElement | null = null;
     protected id: string = makeUUID();
 
-    protected props: Props;
+    props: Props;
     protected events: Props;
 
-    protected eventBus: () => EventBus;
+    protected eventBus: () => EventBus<string>;
 
-    protected children: Record<string, Block | Block[]>
+    children: Record<string, Block | Block[]>
 
     constructor(propsAndChildren: Props) {
-        const eventBus = new EventBus();
+        const eventBus = new EventBus<string>();
         const {children, props} = this._getChildren(propsAndChildren);
         this.children = children;
         this.props = this._makePropsProxy(props);
@@ -59,7 +63,7 @@ export default class Block {
         return {children, props};
     }
 
-    private _registerEvents(eventBus: EventBus) {
+    private _registerEvents(eventBus: EventBus<string>) {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -133,6 +137,10 @@ export default class Block {
             throw new Error('Нет пропсов');
         }
         return this.props;
+    }
+
+    public hide(): void {
+        this.getContent().style.display = 'none';
     }
 
     private _createDocumentElement(tagName: string): HTMLTemplateElement {

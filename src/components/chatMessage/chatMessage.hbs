@@ -1,0 +1,6 @@
+<div class='page-chat_chat-message{{#if is_read}} page-chat_chat-message--read{{/if}}{{#if is_me}} page-chat_chat-message--user{{/if}}{{#if type_info}} page-chat_chat-message--info{{/if}}'>
+    <p>{{#if type_info}}Подключился: {{/if}}{{{content}}}</p>
+    {{#if message_time}}
+        <div class='page-chat_chat-time' title='{{{message_date}}}'>{{{message_time}}}</div>
+    {{/if}}
+</div>

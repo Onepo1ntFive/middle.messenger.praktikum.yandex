@@ -1,0 +1,76 @@
+import Block, { type Props } from '../../services/Block';
+import template from './chatList.hbs?raw';
+import Store, { IState, TChatDetails, TUserDetails } from '../../services/Store';
+import connect from '../../services/connectStore';
+import { ChatListItem } from '../chatListItem';
+import isEqualArray from '../../helpers/isEqualArray';
+import { BASE_URL } from '../../consts/consts';
+
+interface ChatListProps extends Props {
+    chatItems: Array<TChatDetails>
+    onCurrentChatUpdate: void;
+    chats: TChatDetails[];
+
+    [key: string]: unknown;
+}
+
+class ChatList extends Block {
+    constructor(props: ChatListProps) {
+        super({
+            ...props,
+            chatsList: props.chatsList || [],
+        });
+    }
+
+    private updateChatItems() {
+        const props = this.props as ChatListProps;
+        if (props.chatItems.length) {
+            this.children.chatItems = props.chatItems.map((props: TChatDetails) => {
+                    return new ChatListItem({
+                        avatar: props.avatar ? `${BASE_URL}/resources/${ props.avatar }` : '',
+                        created_by: props.created_by,
+                        id: props.id,
+                        last_message: props.last_message,
+                        title: props.title,
+                        unread_count: props.unread_count,
+                        active: props.active || false,
+                        token: props.token,
+                        onCurrentChatUpdate: this.props.onCurrentChatUpdate,
+                    })
+                }
+            );
+        }
+    }
+
+    protected componentDidUpdate(): boolean {
+        const state = Store.getState()
+        const props = this.props as ChatListProps;
+        if (isEqualArray(state.chats, props.chats)) {
+            this.updateChatItems();
+        }
+        return super.componentDidUpdate();
+    }
+
+    protected init() {
+        this.updateChatItems();
+        super.init();
+    }
+
+    override render(): string {
+        return template;
+    }
+}
+
+function mapUserToProps(state: IState): {
+    user: TUserDetails | unknown,
+    chats: TChatDetails[] | unknown,
+    isLoading: boolean | unknown,
+} {
+    return {
+        user: state.user,
+        chats: state.chats,
+        isLoading: state.isLoading
+    };
+}
+
+export default connect(mapUserToProps)(ChatList)
