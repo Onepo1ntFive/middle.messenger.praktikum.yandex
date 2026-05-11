@@ -8,11 +8,19 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noEmit": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "skipLibCheck": true,
+    },
+    "ts-node": {
+        "experimentalSpecifierResolution": "node",
+        "transpileOnly": true
     },
     "include": [
         "src/**/*.ts",
         "vite-env.d.ts",
         ".eslintrc.cjs"
+    ],
+    "exclude": [
+        "node_modules/"
     ]
 }

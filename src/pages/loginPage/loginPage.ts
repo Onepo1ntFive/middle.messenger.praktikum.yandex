@@ -104,7 +104,6 @@ class LoginPage extends Block {
                 }
             }),
         })
-        ;
     }
 
     override render() {
