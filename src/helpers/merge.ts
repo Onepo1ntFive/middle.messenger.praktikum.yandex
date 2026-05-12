@@ -7,7 +7,7 @@ function merge(lhs: Record<string, unknown>, rhs: Record<string, unknown>): Inde
         }
 
         try {
-            let t = rhs[p] as Indexed;
+            const t = rhs[p] as Indexed;
             if (t.constructor === Object) {
                 rhs[p] = merge(lhs[p] as Indexed, rhs[p] as Indexed);
             } else {
