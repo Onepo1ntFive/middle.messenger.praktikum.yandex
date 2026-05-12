@@ -9,3 +9,4 @@ global.document = jsdom.window.document;
 global.MouseEvent = jsdom.window.MouseEvent;
 global.Node = jsdom.window.Node;
 global.history = jsdom.window.history;
+global.XMLHttpRequest = function() {};

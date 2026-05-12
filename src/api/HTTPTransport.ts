@@ -27,12 +27,12 @@ export interface IResponseAdd {
 
 type OptionsWithoutMethod = Omit<Options, 'method'>;
 
-type HTTPMethod = (
+export type HTTPMethod = (
     url: string,
     options?: OptionsWithoutMethod
 ) => Promise<unknown>;
 
-function queryStringify(
+export function queryStringify(
     data: Record<string, string | number | boolean>
 ): string {
     if (typeof data !== 'object' || data === null) {
