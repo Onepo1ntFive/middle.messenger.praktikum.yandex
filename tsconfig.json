@@ -20,8 +20,5 @@
         "src/**/*.ts",
         "vite-env.d.ts",
         ".eslintrc.cjs"
-    ],
-    "exclude": [
-        "node_modules/"
     ]
 }
