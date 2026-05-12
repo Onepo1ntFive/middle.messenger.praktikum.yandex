@@ -1,6 +1,6 @@
 import { BASE_URL } from '../consts/consts';
 
-enum METHODS {
+export enum METHODS {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',

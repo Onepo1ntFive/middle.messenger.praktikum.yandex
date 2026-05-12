@@ -1,4 +1,4 @@
-import { isPlainObject } from './isEqual';
+import { isPlainObject } from './isEqual.ts';
 
 type TPlainObject = {
     [key: string]: unknown;

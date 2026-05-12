@@ -8,6 +8,9 @@ export default tseslint.config(
             'dist/**',
             'node_modules/**',
             '.eslintrc.js',
+            'test/mochaSetup.js',
+            '*.config.js',
+            'src/**/*.spec.ts',
         ]
     },
     js.configs.recommended,

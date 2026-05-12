@@ -10,6 +10,7 @@
         "noEmit": true,
         "strictNullChecks": true,
         "skipLibCheck": true,
+        "allowImportingTsExtensions": true,
     },
     "ts-node": {
         "experimentalSpecifierResolution": "node",
