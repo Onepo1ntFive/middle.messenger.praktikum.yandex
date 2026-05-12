@@ -6,7 +6,7 @@ import Router, { Route } from './Router.ts';
 import Block, { Props } from './Block.ts';
 import { Routes } from '../consts/consts.ts';
 
-describe.only('Route', () => {
+describe('Route', () => {
     let PageComponent: any;
     let router: any;
     let sandbox: sinon.SinonSandbox;
