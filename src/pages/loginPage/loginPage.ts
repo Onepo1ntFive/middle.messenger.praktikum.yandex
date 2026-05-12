@@ -69,14 +69,14 @@ class LoginPage extends Block {
                                     formData[formItem.name as keyof ISignInRequestData] = formItem.value;
                                 }
                             }
-                            AuthController.signIn(formData).then((response: IResponse<IResponseAdd>) => {
+                            AuthController.signIn(formData).then(async (response: IResponse<IResponseAdd>) => {
                                 if (response.status !== 200) {
                                     Store.set('isLoading', false);
                                     const resp = JSON.parse(response.response)
                                     alert(`${ response.status }: ${ resp.reason }`);
                                     return;
                                 }
-                                AuthController.getUser().then((response: IResponse<IResponseAdd>) => {
+                                await AuthController.getUser().then((response: IResponse<IResponseAdd>) => {
                                     Store.set('isLoading', false);
                                     if (response.status !== 200) {
                                         const resp = JSON.parse(response.response)

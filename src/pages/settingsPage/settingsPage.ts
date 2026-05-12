@@ -56,6 +56,10 @@ class SettingsPage extends Block {
         })
     }
 
+    protected componentDidUpdate(): boolean {
+        return super.componentDidUpdate();
+    }
+
     override render() {
         return template;
     }

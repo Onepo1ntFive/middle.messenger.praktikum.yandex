@@ -9,22 +9,20 @@ export default class App {
     async render() {
         try {
             await AuthController.getUser().then((response: IResponse<IResponseAdd>) => {
-                const state = Store.getState();
                 if (response.status === 200) {
                     const userInfo = JSON.parse(response.responseText);
                     Store.set('isAuthenticated', true);
                     Store.set('user', userInfo);
-                    if (state.isAuthenticated) {
-                        if (window.location.pathname === Routes.LOGIN || window.location.pathname === Routes.REGISTER) {
-                            Router.go(Routes.MESSENGER);
-                        }
-                    } else {
+                    if (window.location.pathname === Routes.LOGIN || window.location.pathname === Routes.REGISTER) {
                         Router.go(Routes.MESSENGER);
                     }
+                } else {
+                    Router.go(Routes.LOGIN);
                 }
             }).catch(error => {
                 console.warn(error)
             })
+
             Router
                 .use(Routes.LOGIN, Pages.LoginPage)
                 .use(Routes.REGISTER, Pages.RegistrationPage)

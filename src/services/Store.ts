@@ -5,7 +5,7 @@ export type Indexed<T = unknown> = {
     [key in string]: T;
 };
 
-export type TUserDetails = {
+export interface TUserDetails {
     id: number,
     first_name: string,
     second_name: string,
@@ -24,7 +24,7 @@ export type TProfileDetails = {
     email: string,
     phone: string
 };
-export type TCurrentChat = {
+export interface TCurrentChat {
     id: number | null,
     chatUsers: Array<Omit<TUserDetails, 'phone' | 'email'> & { role: string }>,
     messages: Array<TMessage>,
@@ -122,19 +122,28 @@ class Store extends EventBus<string> {
 export default new Store({
     isLoading: false,
     isAuthenticated: false,
-    user: null,
+    user: {
+        id: 0,
+        first_name: '',
+        second_name: '',
+        display_name: '',
+        phone: '',
+        login: '',
+        avatar: '',
+        email: ''
+    },
     chats: [],
     currentChat: {
         id: null,
         chatUsers: [],
         messages: [],
-        token: null,
+        token: null
     },
     settings: {
         showProfile: true,
         editProfile: false,
         showPassword: false,
-        currentChatId: 0,
+        currentChatId: 0
     },
     searchResults: [],
     websocket: null,

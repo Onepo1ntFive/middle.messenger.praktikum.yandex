@@ -7,15 +7,15 @@ function merge(lhs: Record<string, unknown>, rhs: Record<string, unknown>): Inde
         }
 
         try {
-            const t = rhs[p] as Indexed;
+            let t = rhs[p] as Indexed;
             if (t.constructor === Object) {
                 rhs[p] = merge(lhs[p] as Indexed, rhs[p] as Indexed);
             } else {
                 lhs[p] = rhs[p];
             }
         } catch (e) {
-            console.log(e)
             lhs[p] = rhs[p];
+            rhs['e'] = e;
         }
     });
 

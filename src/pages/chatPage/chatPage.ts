@@ -158,6 +158,16 @@ class ChatPage extends Block {
                 events: {
                     click: (event) => {
                         event.preventDefault();
+                        this.setProps({
+                            settings: {
+                                showProfile: true,
+                                editProfile: false,
+                                showPassword: false,
+                            }
+                        })
+                        Store.set('settings.showProfile', true);
+                        Store.set('settings.editProfile', false);
+                        Store.set('settings.showPassword', false);
                         Router.go(Routes.PROFILE);
                     }
                 }

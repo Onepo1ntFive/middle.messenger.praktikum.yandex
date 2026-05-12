@@ -22,7 +22,16 @@ class AuthController extends Controller {
             this.store.set('isLoading', false);
             if (response && response.status === 200) {
                 this.store.set('isAuthenticated', false);
-                this.store.set('user', null);
+                this.store.set('user', {
+                    id: 0,
+                    first_name: '',
+                    second_name: '',
+                    display_name: '',
+                    phone: '',
+                    login: '',
+                    avatar: '',
+                    email: ''
+                },);
                 this.router.go(Routes.LOGIN);
             }
         } catch (error) {
