@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import HTTPTransport, { queryStringify } from './HTTPTransport.ts';
 import sinon from 'sinon';
 
-describe.only('HTTPTransport', () => {
+describe('HTTPTransport', () => {
     let options: Record<string, unknown>
     let http: HTTPTransport
 
