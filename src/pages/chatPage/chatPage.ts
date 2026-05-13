@@ -242,17 +242,37 @@ class ChatPage extends Block {
         );
     }
 
+    private async getChatUsers() {
+        const state = Store.getState();
+        const currentChat = state.currentChat as TCurrentChat
+        await ChatController.getChatUsers(currentChat.id as number).then((response: IResponse<IResponseAdd>) => {
+            if (response.status !== 200) {
+                alert(`${ response.status }`);
+                return;
+            }
+            const resp = JSON.parse(response.response)
+            Store.set('currentChat.chatUsers', resp);
+            this.setProps({
+                chatUsers: resp,
+            })
+        }).catch(error => {
+            console.warn(error)
+        })
+    }
+
     private updateChatMessages() {
         const state: IState = Store.getState();
         const currentChat = this.props.currentChat as TCurrentChat;
         if (currentChat && currentChat.id) {
             const messages = currentChat.messages?.map((props: Props) => {
                     const date = parseMessageTime(props.time as string);
+                    const message_user = state.currentChat.chatUsers.find(el => el.id === props.user_id);
                     return new ChatMessage({
                         ...props,
                         message_time: date ? date.time : '',
                         message_date: date ? date.date : '',
                         is_me: state.user?.id === props.user_id,
+                        message_user: message_user,
                         type_info: props.type === 'user connected',
                     })
                 }
@@ -275,7 +295,7 @@ class ChatPage extends Block {
             this.getOldMessages(0);
         });
 
-        this.socket.addEventListener('message', (event) => {
+        this.socket.addEventListener('message', async (event) => {
             const mess: TMessage[] | TMessage = JSON.parse(event.data);
             const props = this.props as ChatPageProps;
             const currentChat = props.currentChat as TCurrentChat;
@@ -297,6 +317,7 @@ class ChatPage extends Block {
                     }
                 })
             }
+            await this.getChatUsers();
             this.updateChatMessages();
         });
 
